@@ -4,7 +4,6 @@ export function createStyle() {
   return StyleSheet.create({
     listOrderContainer: {
       padding: 16,
-      flex: 1,
     },
   });
 }

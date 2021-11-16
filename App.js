@@ -12,8 +12,7 @@ import {
   VStack,
   Code,
 } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native';
-import ListOrderDetailScreen from './screens/listOrderScreen';
+import RootNavigation from '@/navigations/RootNavigation';
 
 // Define the config
 const config = {
@@ -26,10 +25,8 @@ export const theme = extendTheme({ config });
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <NativeBaseProvider>
-        <ListOrderDetailScreen />
-      </NativeBaseProvider>
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <RootNavigation></RootNavigation>
+    </NativeBaseProvider>
   );
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import WaitForItTab from '../../screens/listOrderScreen/waitForItTab';
-import WaitForDeliveryTab from '../../screens/listOrderScreen/waitForDeliveryTab';
-import DeliveredTab from '../../screens/listOrderScreen/deliveredTab';
-import ReturnGoodTab from '../../screens/listOrderScreen/returnsGoodTab';
+import WaitForItTab from '@/screens/listOrderScreen/waitForItTab';
+import WaitForDeliveryTab from '@/screens/listOrderScreen/waitForDeliveryTab';
+import DeliveredTab from '@/screens/listOrderScreen/deliveredTab';
+import ReturnGoodTab from '@/screens/listOrderScreen/returnsGoodTab';
 import { Box } from 'native-base';
 
 const Tab = createMaterialTopTabNavigator();
 
-const HomeTopTab = () => {
+const HomeNavigator = () => {
   return (
     <Box
       style={{
@@ -26,4 +26,4 @@ const HomeTopTab = () => {
   );
 };
 
-export default HomeTopTab;
+export default HomeNavigator;

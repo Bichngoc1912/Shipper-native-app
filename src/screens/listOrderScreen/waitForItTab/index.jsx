@@ -6,6 +6,7 @@ const WaitForItTab = () => {
     <Box
       style={{
         backgroundColor: 'red',
+        flex: 1,
       }}
     >
       <Text>{'Chờ lấy'}</Text>
