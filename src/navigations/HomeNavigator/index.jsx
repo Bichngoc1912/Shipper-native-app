@@ -16,7 +16,16 @@ const HomeNavigator = () => {
         height: '100%',
       }}
     >
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarPressColor: '#65A30D',
+          tabBarActiveTintColor: '#65A30D',
+          tabBarInactiveTintColor: '#000',
+          tabBarIndicatorStyle: {
+            backgroundColor: '#65A30D',
+          },
+        }}
+      >
         <Tab.Screen name="Chờ lấy" component={WaitForItTab} />
         <Tab.Screen name="Chờ giao" component={WaitForDeliveryTab} />
         <Tab.Screen name="Đã giao" component={DeliveredTab} />
