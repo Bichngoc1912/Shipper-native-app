@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Box, Text, Pressable, Checkbox } from 'native-base';
-import { ScrollView } from 'react-native';
+import { ScrollView, Linking } from 'react-native';
 import { createStyles } from './style';
 
 const listWaiting = [
@@ -57,9 +57,11 @@ const WaitForItTab = () => {
     return (
       <Box style={styles.listOrderItem} key={item.id}>
         <Box>
-          <Text style={styles.listOrderItemTextPhone}>
-            {item.id} {'-'} {item.phone}
-          </Text>
+          <Pressable onPress={() => Linking.openURL(`tel:${item.phone}`)}>
+            <Text style={styles.listOrderItemTextPhone}>
+              {item.id} {'-'} {item.phone}
+            </Text>
+          </Pressable>
           <Text>{item.name}</Text>
           <Text>{item.addr}</Text>
         </Box>
