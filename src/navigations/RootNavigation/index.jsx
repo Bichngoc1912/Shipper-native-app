@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SCREENS_NAME } from '@/constants/screen';
 import ListOrderDetailScreen from '@/screens/listOrderScreen';
 import HomeNavigator from '@/navigations/HomeNavigator';
+import DetailOrderWaitingScreen from '@/screens/detailOrderWaitingScreen';
 
 const RootStack = createStackNavigator();
 
@@ -19,6 +20,11 @@ const RootNavigation = () => {
         <RootStack.Screen
           name={SCREENS_NAME.LIST_ORDER}
           component={ListOrderDetailScreen}
+        ></RootStack.Screen>
+
+        <RootStack.Screen
+          name={SCREENS_NAME.DETAIL_ORDER_WAITING}
+          component={DetailOrderWaitingScreen}
         ></RootStack.Screen>
       </RootStack.Navigator>
     </NavigationContainer>

@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { Box, Text, Pressable, Checkbox } from 'native-base';
 import { ScrollView, Linking } from 'react-native';
 import { createStyles } from './style';
+import { useNavigation } from '@react-navigation/native';
+import { SCREENS_NAME } from '@/constants/screen';
 
 const listWaiting = [
   {
@@ -48,10 +50,12 @@ const listWaiting = [
   },
 ];
 
-const WaitForItTab = () => {
+function WaitForItTab() {
   const styles = useMemo(() => {
     return createStyles();
   }, []);
+
+  const navigation = useNavigation();
 
   const renderListWaiting = listWaiting.map((item) => {
     return (
@@ -66,7 +70,13 @@ const WaitForItTab = () => {
           <Text>{item.addr}</Text>
         </Box>
         <Box>
-          <Checkbox colorScheme="green" accessibilityLabel="This is a dummy checkbox" />
+          <Checkbox
+            colorScheme="green"
+            accessibilityLabel="This is a dummy checkbox"
+            onChange={() =>
+              navigation.navigate({ name: SCREENS_NAME.DETAIL_ORDER_WAITING })
+            }
+          />
         </Box>
       </Box>
     );
@@ -86,6 +96,6 @@ const WaitForItTab = () => {
       </Box>
     </ScrollView>
   );
-};
+}
 
 export default WaitForItTab;
