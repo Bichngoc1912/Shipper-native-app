@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Text } from 'native-base';
+import MainHeader from '@/components/Header';
 
 const WaitForItTab = () => {
   return (

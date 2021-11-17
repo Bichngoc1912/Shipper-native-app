@@ -4,7 +4,7 @@ import WaitForItTab from '@/screens/listOrderScreen/waitForItTab';
 import WaitForDeliveryTab from '@/screens/listOrderScreen/waitForDeliveryTab';
 import DeliveredTab from '@/screens/listOrderScreen/deliveredTab';
 import ReturnGoodTab from '@/screens/listOrderScreen/returnsGoodTab';
-import { Box } from 'native-base';
+import { Box, Text } from 'native-base';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -13,7 +13,7 @@ const HomeNavigator = () => {
     <Box
       style={{
         backgroundColor: 'blue',
-        height: 50,
+        height: '100%',
       }}
     >
       <Tab.Navigator>
