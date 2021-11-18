@@ -5,6 +5,7 @@ import WaitForDeliveryTab from '@/screens/listOrderScreen/waitForDeliveryTab';
 import DeliveredTab from '@/screens/listOrderScreen/deliveredTab';
 import ReturnGoodTab from '@/screens/listOrderScreen/returnsGoodTab';
 import { Box, Text } from 'native-base';
+import { colorPalletter } from '@/assets/theme/color';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -18,11 +19,11 @@ const HomeNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
-          tabBarPressColor: '#65A30D',
-          tabBarActiveTintColor: '#65A30D',
+          tabBarPressColor: colorPalletter.lime[600],
+          tabBarActiveTintColor: colorPalletter.lime[600],
           tabBarInactiveTintColor: '#000',
           tabBarIndicatorStyle: {
-            backgroundColor: '#65A30D',
+            backgroundColor: colorPalletter.lime[600],
           },
         }}
       >

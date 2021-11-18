@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colorPalletter } from '@/assets/theme/color';
 
 export function createStyles() {
   return StyleSheet.create({
@@ -17,12 +18,12 @@ export function createStyles() {
       marginBottom: 8,
     },
     addrBtnText: {
-      color: '#292524',
+      color: colorPalletter.warmGray[800],
       fontSize: 12,
     },
     listOrderItem: {
       borderWidth: 1,
-      borderColor: '#d9d9d9',
+      borderColor: colorPalletter.gray[300],
       padding: 16,
       marginBottom: 16,
       display: 'flex',
@@ -30,7 +31,7 @@ export function createStyles() {
       justifyContent: 'space-between',
     },
     listOrderItemTextPhone: {
-      color: '#F59E0B',
+      color: colorPalletter.amber[500],
       fontWeight: 'bold',
     },
   });
