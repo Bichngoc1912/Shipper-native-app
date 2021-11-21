@@ -7,6 +7,7 @@ import HomeNavigator from '@/navigations/HomeNavigator';
 import DetailOrderWaitingScreen from '@/screens/detailOrderWaitingScreen';
 import DetailWaitingForItScreen from '@/screens/detailWaitingForItScreen';
 import DetailOrderWaitingDeliveryScreen from '@/screens/detailOrderWatingDeliverySceen';
+import DetailOrderDeliverdScreen from '@/screens/detailOrderDeliveredScreen';
 
 const RootStack = createStackNavigator();
 
@@ -37,6 +38,11 @@ const RootNavigation = () => {
         <RootStack.Screen
           name={SCREENS_NAME.DETAIL_WAITING_DELIVEY}
           component={DetailOrderWaitingDeliveryScreen}
+        ></RootStack.Screen>
+
+        <RootStack.Screen
+          name={SCREENS_NAME.DETAIL_DELIVERD}
+          component={DetailOrderDeliverdScreen}
         ></RootStack.Screen>
       </RootStack.Navigator>
     </NavigationContainer>
