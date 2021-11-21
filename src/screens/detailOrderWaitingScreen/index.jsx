@@ -2,30 +2,36 @@ import React, { useMemo } from 'react';
 import { Box, Text, Button, Pressable } from 'native-base';
 import { createStyles } from './style';
 import { ScrollView } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 function DetailOrderWaitingScreen() {
   const styles = useMemo(() => {
     return createStyles();
   }, []);
 
+  const route = useRoute();
+
+  const { status } = route?.params;
+
+  console.log('status', status);
   return (
     <Box style={styles.container}>
       <ScrollView>
         <Box style={styles.guestInfoSection}>
           <Text style={styles.guestInfoPhoneNumber}>{'a512z5-0976849512'}</Text>
           <Text style={styles.guestInfoName}>
-            {'Nguoi mua:'} <Text>{'CHI PHUNG'}</Text>
+            {'Người mua:'} <Text>{'CHI PHUNG'}</Text>
           </Text>
           <Text style={styles.guestInfoAddr}>{'32 Phan Dinh Phung'}</Text>
           <Text style={styles.guestInfoStatus}>
-            {'Trang thai: '}
+            {'Trạng thái: '}
             <Text style={styles.guestInfoStatusInner}>{'CHỜ GIAO'}</Text>
           </Text>
         </Box>
 
         <Box style={styles.priceSection}>
           <Text style={styles.priceText1}>
-            {'Thu ho:'} <Text>{'350.000 đ'}</Text>
+            {'Thu hộ:'} <Text>{'350.000 đ'}</Text>
           </Text>
           <Text style={styles.priceShipText}>
             {'Tiền ship: '} <Text>{'15.000 đ'}</Text>
