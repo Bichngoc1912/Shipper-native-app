@@ -6,60 +6,48 @@ import { useNavigation } from '@react-navigation/native';
 import { SCREENS_NAME } from '@/constants/screen';
 import { colorPalletter } from '@/assets/theme/color';
 
-const orderStatusEnum = {
-  WAITING: 1,
-  RECEIVED: 2,
-};
-
 const listWaiting = [
   {
     id: 'a512z1',
     phone: '0976849512',
     name: 'CHI NHUNG',
     addr: '32 Phan Dinh Phung',
-    status: orderStatusEnum.RECEIVED,
   },
   {
     id: 'a512z2',
     phone: '0976849512',
     name: 'ANH TEO',
     addr: '32 Phan Dinh Phung',
-    status: orderStatusEnum.WAITING,
   },
   {
     id: 'a512z3',
     phone: '0976849512',
     name: 'CHI DUYEN',
     addr: '32 Phan Dinh Phung',
-    status: orderStatusEnum.RECEIVED,
   },
   {
     id: 'a512z4',
     phone: '0976849512',
     name: 'BE DAU TAY',
     addr: '32 Phan Dinh Phung',
-    status: orderStatusEnum.WAITING,
   },
   {
     id: 'a512z5',
     phone: '0976849512',
     name: 'BE DAU TAY',
     addr: '32 Phan Dinh Phung',
-    status: orderStatusEnum.RECEIVED,
   },
   {
     id: 'a512z6',
     phone: '0976849512',
     name: 'BE DAU TAY',
     addr: '32 Phan Dinh Phung',
-    status: orderStatusEnum.WAITING,
   },
   {
     id: 'a512z7',
     phone: '0976849512',
     name: 'BE DAU TAY',
     addr: '32 Phan Dinh Phung',
-    status: orderStatusEnum.RECEIVED,
   },
 ];
 
@@ -75,9 +63,7 @@ function WaitForItTab() {
       <Box style={styles.listOrderItem} key={item.id}>
         <Box>
           <Pressable onPress={() => Linking.openURL(`tel:${item.phone}`)}>
-            <Text style={styles.listOrderItemTextPhone}>
-              {item.id} {'-'} {item.phone}
-            </Text>
+            <Text style={styles.listOrderItemTextPhone}>{item.phone}</Text>
           </Pressable>
           <Text>{item.name}</Text>
           <Text>{item.addr}</Text>
@@ -86,10 +72,7 @@ function WaitForItTab() {
           <Button
             onPress={() =>
               navigation.navigate({
-                name: SCREENS_NAME.DETAIL_ORDER_WAITING,
-                params: {
-                  status: item.status,
-                },
+                name: SCREENS_NAME.DETAIL_WAITING_FOR_IT,
               })
             }
             style={{
