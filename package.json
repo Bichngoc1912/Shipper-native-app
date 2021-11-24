@@ -25,6 +25,7 @@
     "@react-navigation/stack": "^6.0.11",
     "@types/react": "^17.0.35",
     "@types/react-native": "^0.66.4",
+    "apisauce": "^2.1.2",
     "babel-plugin-module-resolver": "^4.1.0",
     "expo": "~42.0.0",
     "expo-status-bar": "~1.0.4",
