@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { colorPalletter } from '@/assets/theme/color';
+
+const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 export function createStyles() {
   return StyleSheet.create({
@@ -7,6 +9,7 @@ export function createStyles() {
       paddingHorizontal: 16,
       backgroundColor: 'white',
       flex: 1,
+      height: WINDOW_HEIGHT,
     },
     addrBtnSection: {
       display: 'flex',
