@@ -8,51 +8,6 @@ import { colorPalletter } from '@/assets/theme/color';
 import { getListWaiForItTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 
-const listWaiting = [
-  {
-    id: 'a512z1',
-    phone: '0976849512',
-    name: 'CHI NHUNG',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z2',
-    phone: '0976849512',
-    name: 'ANH TEO',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z3',
-    phone: '0976849512',
-    name: 'CHI DUYEN',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z4',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z5',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z6',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z7',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-];
-
 function WaitForDeliveryScreen() {
   const styles = useMemo(() => {
     return createStyles();
@@ -100,8 +55,9 @@ function WaitForDeliveryScreen() {
         <Box>
           <Button
             onPress={() =>
-              navigation.navigate({
-                name: SCREENS_NAME.DETAIL_WAITING_DELIVEY,
+              navigation.navigate(SCREENS_NAME.DETAIL_WAITING_DELIVEY, {
+                id: item.DonHangID,
+                tab: 'CG',
               })
             }
             style={{

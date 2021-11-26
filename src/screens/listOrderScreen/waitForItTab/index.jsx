@@ -57,6 +57,10 @@ function WaitForItTab() {
             onPress={() =>
               navigation.navigate({
                 name: SCREENS_NAME.DETAIL_WAITING_FOR_IT,
+                params: {
+                  tab: 'CL',
+                  id: item.ShopID,
+                },
               })
             }
             style={{
