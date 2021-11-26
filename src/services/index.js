@@ -1,1 +1,1 @@
-export * from '@/services/waitForIt';
+export * from '@/services/getListTab';
