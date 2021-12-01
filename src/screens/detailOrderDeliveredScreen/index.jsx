@@ -6,6 +6,7 @@ import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 
+//Đã giao
 function DetailOrderDeliverdScreen() {
   const styles = useMemo(() => {
     return createStyles();

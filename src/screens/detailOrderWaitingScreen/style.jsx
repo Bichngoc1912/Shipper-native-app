@@ -2,76 +2,60 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { colorPalletter } from '@/assets/theme/color';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
+
 export function createStyles() {
   return StyleSheet.create({
     container: {
       flex: 1,
+      alignItems: 'center',
       backgroundColor: 'white',
-      padding: 16,
+      padding: 8,
     },
-    guestInfoSection: {
-      borderBottomColor: colorPalletter.gray[300],
+    sellerInfoSection: {
+      borderBottomColor: colorPalletter.gray['300'],
       borderBottomWidth: 1,
-      paddingBottom: 16,
+      paddingVertical: 8,
+      width: WINDOW_WIDTH,
     },
-    guestInfoPhoneNumber: {
+    sellerInfoPhoneTxt: {
       color: colorPalletter.amber[500],
       fontWeight: 'bold',
       fontSize: 16,
       paddingBottom: 4,
     },
-    guestInfoName: {
-      paddingBottom: 2,
-    },
-    guestInfoAddr: {
-      fontWeight: 'bold',
-      paddingBottom: 2,
-    },
-    guestInfoStatusInner: {
-      color: colorPalletter.lime[500],
-      fontWeight: 'bold',
-      marginBottom: 24,
-    },
-    priceSection: {
-      borderBottomColor: colorPalletter.gray[300],
-      borderBottomWidth: 1,
-      paddingVertical: 16,
-    },
-    priceShipText: {
-      paddingBottom: 2,
-    },
-    priceText1: {
-      paddingBottom: 2,
-    },
-    summaryPrice: {
-      color: colorPalletter.gray[800],
-      fontWeight: 'bold',
-      fontSize: 14,
-    },
-    summaryPriceNumber: {
-      color: colorPalletter.amber[500],
-      fontWeight: 'bold',
-    },
-    orderInfoSection: {
-      borderBottomColor: colorPalletter.gray[300],
-      borderBottomWidth: 1,
-      paddingVertical: 16,
-    },
-    orderInfoTextTitle: {
-      color: colorPalletter.gray[800],
-      fontWeight: 'bold',
-      paddingBottom: 2,
-    },
-    sellerInfoSecction: {
-      paddingVertical: 16,
-    },
-    sellerInfoTitleInner: {
-      marginBottom: 2,
-    },
-    sellerPhoneNumberInner: {
-      color: colorPalletter.lime[500],
-      fontWeight: 'bold',
+    sellerInfoTitle: {
       fontSize: 16,
+      paddingBottom: 4,
+    },
+    sellerInfoName: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      paddingBottom: 4,
+    },
+    sellerInfoAddress: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      paddingBottom: 8,
+    },
+    orderItem: {
+      borderBottomColor: colorPalletter.gray['300'],
+      borderBottomWidth: 1,
+      paddingVertical: 16,
+      width: WINDOW_WIDTH,
+    },
+    orderItemTitleBox: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    orderItemTitle: {
+      fontSize: 16,
+      marginBottom: 4,
+      marginLeft: 8,
+    },
+    orderTitleBold: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: colorPalletter.amber[500],
     },
     btnGroupBottom: {
       backgroundColor: colorPalletter.lime[600],
@@ -119,6 +103,17 @@ export function createStyles() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    orderStatusSection: {
+      paddingVertical: 8,
+    },
+    orderStatusTitle: {
+      fontSize: 16,
+    },
+    orderStatusTitleBold: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: colorPalletter.lime[500],
     },
   });
 }

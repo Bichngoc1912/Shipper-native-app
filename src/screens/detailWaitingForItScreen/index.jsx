@@ -5,6 +5,7 @@ import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 
+//Chờ lấy
 const DetailWaitingForItScreen = () => {
   const styles = useMemo(() => {
     return createStyles();

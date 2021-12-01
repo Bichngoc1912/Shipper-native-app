@@ -13,10 +13,10 @@ export async function getListWaiForItTab({ tab }) {
   }
 }
 
-export async function getListReturnTab({ tab, id }) {
+export async function getListReturnTab({ tab }) {
   const reqParam = {
     tab: tab,
-    id: id,
+    id: 1,
     code: 'ABCE0123456789',
   };
 

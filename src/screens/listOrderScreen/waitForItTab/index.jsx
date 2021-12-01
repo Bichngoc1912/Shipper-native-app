@@ -28,7 +28,6 @@ function WaitForItTab() {
           return;
         }
 
-        console.log('res', res);
         setIsGettingData(false);
         setListShop(res.data?.List);
       })
