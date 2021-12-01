@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://devshipvn.com/web-api/';
+export const BASE_URL = 'http://devship.vn/web-api/';

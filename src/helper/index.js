@@ -8,7 +8,7 @@ export const HTTP_KEY_HEADER = {
 };
 
 export const HTTP_HEADER_VALUE = {
-  APPLICATION_JSON: 'application/json',
+  APPLICATION_JSON: 'application/x-www-form-urlencoded',
 };
 
 export const httpClient = api.create({

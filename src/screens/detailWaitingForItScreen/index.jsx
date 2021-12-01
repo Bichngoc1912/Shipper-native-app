@@ -1,38 +1,9 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { Box, Text, ScrollView, Pressable, Checkbox } from 'native-base';
 import { createStyles } from './style';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
-
-const listOrder = [
-  {
-    id: 'a24abe',
-    name: 'CHI PHUNG',
-    address: '32 Phan Đình Phùng',
-  },
-  {
-    id: 'a512z1',
-    name: 'BE DAU TAY',
-    address: '53 Nguyễn Văn Trỗi',
-  },
-  {
-    id: 'a98ab6',
-    name: 'HOA THUY TIEN',
-    address: '61 Hùng Vương',
-  },
-  {
-    id: 'a24abc',
-    name: 'CHI PHUNG',
-    address: '32 Phan Đình Phùng',
-  },
-  {
-    id: 'a24abf',
-    name: 'CHI PHUNG',
-    address: '32 Phan Đình Phùng',
-  },
-];
 
 const DetailWaitingForItScreen = () => {
   const styles = useMemo(() => {

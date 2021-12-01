@@ -27,6 +27,8 @@ function WaitForItTab() {
         if (!isComponentMounted) {
           return;
         }
+
+        console.log('res', res);
         setIsGettingData(false);
         setListShop(res.data?.List);
       })
