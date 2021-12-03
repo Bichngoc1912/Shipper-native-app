@@ -22,7 +22,7 @@ function WaitForItTab() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListWaiForItTab({ tab: 'CL' })
+    getListWaiForItTab({ tab: 'CL', group: 9 })
       .then((res) => {
         if (!isComponentMounted) {
           return;

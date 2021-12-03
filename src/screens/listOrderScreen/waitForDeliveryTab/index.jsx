@@ -22,11 +22,12 @@ function WaitForDeliveryScreen() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListWaiForItTab({ tab: 'CG' })
+    getListWaiForItTab({ tab: 'CG', group: 7 })
       .then((res) => {
         if (!isComponentMounted) {
           return;
         }
+
         setListShop(res?.data?.List);
         setIsGettingData(false);
       })
@@ -49,7 +50,7 @@ function WaitForDeliveryScreen() {
           <Pressable onPress={() => Linking.openURL(`tel:${item.DienThoai}`)}>
             <Text style={styles.listOrderItemTextPhone}>{item.DienThoai}</Text>
           </Pressable>
-          <Text>{item.TenKH}</Text>
+          <Text>{item.HoTen}</Text>
           <Text>{item.DiaChi}</Text>
         </Box>
         <Box>

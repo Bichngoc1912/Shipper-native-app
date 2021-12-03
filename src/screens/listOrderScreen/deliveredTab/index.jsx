@@ -67,7 +67,7 @@ function DeliveredScreen() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListWaiForItTab({ tab: 'DG' })
+    getListWaiForItTab({ tab: 'DG', group: 6 })
       .then((res) => {
         if (!isComponentMounted) {
           return;

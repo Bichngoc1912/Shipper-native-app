@@ -1,8 +1,9 @@
 import { httpClient } from '@/helper/index';
 
-export async function getListWaiForItTab({ tab }) {
+export async function getListWaiForItTab({ tab, group }) {
   const reqParam = {
     tab: tab,
+    group: group,
     code: 'ABCE0123456789',
   };
 

@@ -22,7 +22,7 @@ function ReturnsGoodTab() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListReturnTab({ tab: 'TL' })
+    getListReturnTab({ tab: 'TL', group: 10 })
       .then((res) => {
         if (!isComponentMounted) {
           return;
