@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  Link,
-  HStack,
-  Center,
-  Heading,
-  Switch,
-  useColorMode,
-  NativeBaseProvider,
-  extendTheme,
-  VStack,
-  Code,
-} from 'native-base';
+import { NativeBaseProvider, extendTheme } from 'native-base';
 import RootNavigation from '@/navigations/RootNavigation';
 
 // Define the config

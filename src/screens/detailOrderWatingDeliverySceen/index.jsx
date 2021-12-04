@@ -29,12 +29,8 @@ function DetailOrderWaitingDeliveryScreen() {
         }
 
         const response = res?.data;
-        const idxChar = response.lastIndexOf(',');
-        const resString = response.slice(0, idxChar);
-        const lastString = resString + '}';
-        const parseResponseToObj = JSON.parse(lastString);
 
-        setShopInfo(parseResponseToObj);
+        setShopInfo(response);
         setIsGettingData(false);
       })
       .catch((err) => {

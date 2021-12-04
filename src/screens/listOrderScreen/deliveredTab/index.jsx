@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import { Box, Text, Pressable, Button } from 'native-base';
 import { ScrollView, Linking } from 'react-native';
 import { createStyles } from './style';
@@ -7,56 +7,17 @@ import { SCREENS_NAME } from '@/constants/screen';
 import { colorPalletter } from '@/assets/theme/color';
 import { getListWaiForItTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
-
-const listWaiting = [
-  {
-    id: 'a512z1',
-    phone: '0976849512',
-    name: 'CHI NHUNG',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z2',
-    phone: '0976849512',
-    name: 'ANH TEO',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z3',
-    phone: '0976849512',
-    name: 'CHI DUYEN',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z4',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z5',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z6',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-  {
-    id: 'a512z7',
-    phone: '0976849512',
-    name: 'BE DAU TAY',
-    addr: '32 Phan Dinh Phung',
-  },
-];
+import ListStreetNameDGBottomSheet from '@/components/ListStreetNameDG';
 
 function DeliveredScreen() {
   const styles = useMemo(() => {
     return createStyles();
   }, []);
+
+  const modalRef = useRef(null);
+  const onOpen = () => {
+    modalRef.current?.open();
+  };
 
   const navigation = useNavigation();
 
@@ -127,7 +88,7 @@ function DeliveredScreen() {
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <Box style={styles.container}>
-            <Pressable>
+            <Pressable onPress={() => onOpen()}>
               <Box style={styles.addrBtnSection}>
                 <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
                 {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}

@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import { Box, Text, Pressable, Button } from 'native-base';
 import { ScrollView, Linking } from 'react-native';
 import { createStyles } from './style';
@@ -7,6 +7,7 @@ import { SCREENS_NAME } from '@/constants/screen';
 import { colorPalletter } from '@/assets/theme/color';
 import { getListWaiForItTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
+import ListStreetNameBottomSheet from '@/components/ListStreetNameCL';
 
 function WaitForItTab() {
   const styles = useMemo(() => {
@@ -17,6 +18,11 @@ function WaitForItTab() {
   const [listShop, setListShop] = useState();
 
   const navigation = useNavigation();
+
+  const modalRef = useRef(null);
+  const onOpen = () => {
+    modalRef.current?.open();
+  };
 
   useEffect(() => {
     setIsGettingData(true);
@@ -73,6 +79,7 @@ function WaitForItTab() {
           </Button>
           <Text>{item.TrangThai}</Text>
         </Box>
+        <ListStreetNameBottomSheet modal={modalRef} tab={'CL'} />
       </Box>
     );
   });
@@ -84,7 +91,7 @@ function WaitForItTab() {
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <Box style={styles.container}>
-            <Pressable>
+            <Pressable onPress={() => onOpen()}>
               <Box style={styles.addrBtnSection}>
                 <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
                 {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}

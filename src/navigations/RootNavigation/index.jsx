@@ -8,43 +8,46 @@ import DetailOrderWaitingScreen from '@/screens/detailOrderWaitingScreen';
 import DetailWaitingForItScreen from '@/screens/detailWaitingForItScreen';
 import DetailOrderWaitingDeliveryScreen from '@/screens/detailOrderWatingDeliverySceen';
 import DetailOrderDeliverdScreen from '@/screens/detailOrderDeliveredScreen';
+import { Host, Portal } from 'react-native-portalize';
 
 const RootStack = createStackNavigator();
 
 const RootNavigation = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={SCREENS_NAME.LIST_ORDER}>
-        <RootStack.Screen
-          name={SCREENS_NAME.HOME_NAVIGATOR}
-          component={HomeNavigator}
-        ></RootStack.Screen>
+      <Host>
+        <RootStack.Navigator initialRouteName={SCREENS_NAME.LIST_ORDER}>
+          <RootStack.Screen
+            name={SCREENS_NAME.HOME_NAVIGATOR}
+            component={HomeNavigator}
+          ></RootStack.Screen>
 
-        <RootStack.Screen
-          name={SCREENS_NAME.LIST_ORDER}
-          component={ListOrderDetailScreen}
-        ></RootStack.Screen>
+          <RootStack.Screen
+            name={SCREENS_NAME.LIST_ORDER}
+            component={ListOrderDetailScreen}
+          ></RootStack.Screen>
 
-        <RootStack.Screen
-          name={SCREENS_NAME.DETAIL_ORDER_WAITING}
-          component={DetailOrderWaitingScreen}
-        ></RootStack.Screen>
+          <RootStack.Screen
+            name={SCREENS_NAME.DETAIL_ORDER_WAITING}
+            component={DetailOrderWaitingScreen}
+          ></RootStack.Screen>
 
-        <RootStack.Screen
-          name={SCREENS_NAME.DETAIL_WAITING_FOR_IT}
-          component={DetailWaitingForItScreen}
-        ></RootStack.Screen>
+          <RootStack.Screen
+            name={SCREENS_NAME.DETAIL_WAITING_FOR_IT}
+            component={DetailWaitingForItScreen}
+          ></RootStack.Screen>
 
-        <RootStack.Screen
-          name={SCREENS_NAME.DETAIL_WAITING_DELIVEY}
-          component={DetailOrderWaitingDeliveryScreen}
-        ></RootStack.Screen>
+          <RootStack.Screen
+            name={SCREENS_NAME.DETAIL_WAITING_DELIVEY}
+            component={DetailOrderWaitingDeliveryScreen}
+          ></RootStack.Screen>
 
-        <RootStack.Screen
-          name={SCREENS_NAME.DETAIL_DELIVERD}
-          component={DetailOrderDeliverdScreen}
-        ></RootStack.Screen>
-      </RootStack.Navigator>
+          <RootStack.Screen
+            name={SCREENS_NAME.DETAIL_DELIVERD}
+            component={DetailOrderDeliverdScreen}
+          ></RootStack.Screen>
+        </RootStack.Navigator>
+      </Host>
     </NavigationContainer>
   );
 };
