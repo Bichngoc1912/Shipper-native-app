@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import { Box, Text, Pressable, Button } from 'native-base';
 import { ScrollView, Linking } from 'react-native';
 import { createStyles } from './style';
@@ -7,6 +7,8 @@ import { SCREENS_NAME } from '@/constants/screen';
 import { colorPalletter } from '@/assets/theme/color';
 import { getListReturnTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
+import ListStreetNameTLBottomSheet from '@/components/ListStreetNameTL';
+import EmptyListOrder from '@/components/EmptyListOrder';
 
 function ReturnsGoodTab() {
   const styles = useMemo(() => {
@@ -15,8 +17,14 @@ function ReturnsGoodTab() {
 
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
+  const [isEmptyListOrder, setIsEmptyListOrder] = useState(false);
 
   const navigation = useNavigation();
+
+  const modalRef = useRef(null);
+  const onOpen = () => {
+    modalRef.current?.open();
+  };
 
   useEffect(() => {
     setIsGettingData(true);
@@ -28,6 +36,13 @@ function ReturnsGoodTab() {
           return;
         }
 
+        if (!res?.data?.List) {
+          setIsEmptyListOrder(true);
+          setIsGettingData(false);
+          return;
+        }
+
+        setIsEmptyListOrder(false);
         setIsGettingData(false);
         setListShop(res.data?.List);
       })
@@ -82,19 +97,26 @@ function ReturnsGoodTab() {
       {isGettingData ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Box style={styles.container}>
-            <Pressable>
-              <Box style={styles.addrBtnSection}>
-                <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
-                {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
-              </Box>
-            </Pressable>
+        <>
+          {isEmptyListOrder ? (
+            <EmptyListOrder />
+          ) : (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Box style={styles.container}>
+                <Pressable onPress={() => onOpen()}>
+                  <Box style={styles.addrBtnSection}>
+                    <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                    {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
+                  </Box>
+                </Pressable>
 
-            {renderListWaiting}
-          </Box>
-        </ScrollView>
+                {renderListWaiting}
+              </Box>
+            </ScrollView>
+          )}
+        </>
       )}
+      <ListStreetNameTLBottomSheet modal={modalRef} />
     </>
   );
 }

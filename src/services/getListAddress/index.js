@@ -38,3 +38,16 @@ export async function getListStreetNameDG(code) {
     return err;
   }
 }
+
+export async function getListStreetNameTL(code) {
+  const reqParam = {
+    tab: 'TL',
+    code: code ?? 'ABCDEF123456789',
+  };
+
+  try {
+    return await httpClient.get('group.html', reqParam);
+  } catch (err) {
+    return err;
+  }
+}

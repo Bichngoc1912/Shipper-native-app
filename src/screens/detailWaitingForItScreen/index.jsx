@@ -1,22 +1,55 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { Box, Text, ScrollView, Pressable, Checkbox } from 'native-base';
+import { Box, Text, ScrollView, Pressable, Checkbox, useToast } from 'native-base';
 import { createStyles } from './style';
 import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
+import { changeStatus } from '@/services/changeStatus';
 
 //Chờ lấy
 const DetailWaitingForItScreen = () => {
+  const [orderID, setOrderID] = useState();
   const styles = useMemo(() => {
     return createStyles();
   });
 
+  const toast = useToast();
   const route = useRoute();
   const { id, tab } = route?.params;
 
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
   const [shopInfo, setShopInfo] = useState();
+
+  const handleChangeStatus = (id, status) => {
+    changeStatus({ id: id, status: status })
+      .then((res) => {
+        if (res?.data?.msg === 'Error') {
+          toast.show({
+            description: 'Đã có lỗi xảy ra !',
+            status: 'error',
+            placement: 'top',
+            isClosable: true,
+          });
+          return;
+        }
+
+        toast.show({
+          baseStyle: {
+            display: 'flex',
+            flexWrap: 'wrap',
+            fontSize: 11,
+          },
+          description: 'Cập nhật trạng thái đơn hàng thành công !',
+          status: 'success',
+          placement: 'top',
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     setIsGettingData(true);
@@ -28,6 +61,7 @@ const DetailWaitingForItScreen = () => {
           return;
         }
 
+        console.log(res?.data);
         setListShop(res?.data?.List);
         setShopInfo(res?.data);
         setIsGettingData(false);
@@ -44,6 +78,7 @@ const DetailWaitingForItScreen = () => {
     };
   }, [id, tab]);
 
+  console.log('DonHangID', orderID);
   const renderListOrder = listShop?.map((item) => {
     return (
       <Box key={item.MaDonHang} style={styles.orderItem}>
@@ -52,6 +87,7 @@ const DetailWaitingForItScreen = () => {
             accessibilityLabel="This is a dummy checkbox"
             colorScheme="green"
             size="sm"
+            onPress={() => setOrderID(item.DonHangID)}
           />
           <Text style={styles.orderItemTitle}>
             <Text style={styles.orderTitleBold}>{item.MaDonHang} </Text>
@@ -104,7 +140,10 @@ const DetailWaitingForItScreen = () => {
                   <Text style={styles.btnTextTitleInner}>{''}</Text>
                 </Box>
               </Pressable>
-              <Pressable style={styles.btnInner2}>
+              <Pressable
+                style={styles.btnInner2}
+                onPress={() => handleChangeStatus(orderID, 'CG')}
+              >
                 <Box style={styles.btnTextTitle}>
                   <Text style={styles.btnTextTitleInner}>{'Chờ giao'}</Text>
                 </Box>

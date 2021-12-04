@@ -28,7 +28,6 @@ const ListStreetNameBottomSheet = (props) => {
           return;
         }
 
-        console.log('CL', res?.data);
         setListStreet(res?.data?.List);
       })
       .catch((err) => {

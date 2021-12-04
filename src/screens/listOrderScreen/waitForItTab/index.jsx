@@ -8,6 +8,7 @@ import { colorPalletter } from '@/assets/theme/color';
 import { getListWaiForItTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameBottomSheet from '@/components/ListStreetNameCL';
+import EmptyListOrder from '@/components/EmptyListOrder';
 
 function WaitForItTab() {
   const styles = useMemo(() => {
@@ -16,6 +17,7 @@ function WaitForItTab() {
 
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
+  const [isEmptyListOrder, setIsEmptyListOrder] = useState(false);
 
   const navigation = useNavigation();
 
@@ -34,6 +36,13 @@ function WaitForItTab() {
           return;
         }
 
+        if (!res?.data?.List) {
+          setIsGettingData(false);
+          setIsEmptyListOrder(true);
+          return;
+        }
+
+        setIsEmptyListOrder(false);
         setIsGettingData(false);
         setListShop(res.data?.List);
       })
@@ -89,18 +98,24 @@ function WaitForItTab() {
       {isGettingData ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Box style={styles.container}>
-            <Pressable onPress={() => onOpen()}>
-              <Box style={styles.addrBtnSection}>
-                <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
-                {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
-              </Box>
-            </Pressable>
+        <>
+          {isEmptyListOrder ? (
+            <EmptyListOrder />
+          ) : (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Box style={styles.container}>
+                <Pressable onPress={() => onOpen()}>
+                  <Box style={styles.addrBtnSection}>
+                    <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                    {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
+                  </Box>
+                </Pressable>
 
-            {renderListWaiting}
-          </Box>
-        </ScrollView>
+                {renderListWaiting}
+              </Box>
+            </ScrollView>
+          )}
+        </>
       )}
     </>
   );

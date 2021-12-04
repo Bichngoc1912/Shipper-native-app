@@ -5,9 +5,9 @@ import { Portal } from 'react-native-portalize';
 import { CreateStyles } from './style';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { getListStreetNameDG } from '@/services/getListAddress';
+import { getListStreetNameTL } from '@/services/getListAddress';
 
-const ListStreetNameDGBottomSheet = (props) => {
+const ListStreetNameTLBottomSheet = (props) => {
   const { modal, tab } = props;
   const [listStreet, setListStreet] = useState();
 
@@ -22,7 +22,7 @@ const ListStreetNameDGBottomSheet = (props) => {
   useEffect(() => {
     let isComponentMounted = true;
 
-    getListStreetNameDG()
+    getListStreetNameTL()
       .then((res) => {
         if (!res?.data || !isComponentMounted) {
           return;
@@ -75,4 +75,4 @@ const ListStreetNameDGBottomSheet = (props) => {
   );
 };
 
-export default ListStreetNameDGBottomSheet;
+export default ListStreetNameTLBottomSheet;

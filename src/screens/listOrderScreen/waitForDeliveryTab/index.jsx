@@ -8,6 +8,7 @@ import { colorPalletter } from '@/assets/theme/color';
 import { getListWaiForItTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameCGBottomSheet from '@/components/ListStreetNameCG';
+import EmptyListOrder from '@/components/EmptyListOrder';
 
 function WaitForDeliveryScreen() {
   const styles = useMemo(() => {
@@ -16,6 +17,7 @@ function WaitForDeliveryScreen() {
 
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
+  const [isEmptyListOrder, setIsEmptyListOrder] = useState(false);
 
   const navigation = useNavigation();
 
@@ -34,6 +36,13 @@ function WaitForDeliveryScreen() {
           return;
         }
 
+        if (!res?.data?.List) {
+          setIsEmptyListOrder(true);
+          setIsGettingData(false);
+          return;
+        }
+
+        setIsEmptyListOrder(false);
         setListShop(res?.data?.List);
         setIsGettingData(false);
       })
@@ -83,18 +92,24 @@ function WaitForDeliveryScreen() {
       {isGettingData ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Box style={styles.container}>
-            <Pressable onPress={() => onOpen()}>
-              <Box style={styles.addrBtnSection}>
-                <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
-                {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
-              </Box>
-            </Pressable>
+        <>
+          {isEmptyListOrder ? (
+            <EmptyListOrder />
+          ) : (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Box style={styles.container}>
+                <Pressable onPress={() => onOpen()}>
+                  <Box style={styles.addrBtnSection}>
+                    <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                    {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
+                  </Box>
+                </Pressable>
 
-            {renderListWaiting}
-          </Box>
-        </ScrollView>
+                {renderListWaiting}
+              </Box>
+            </ScrollView>
+          )}
+        </>
       )}
       <ListStreetNameCGBottomSheet modal={modalRef} tab={'CG'} />
     </>
