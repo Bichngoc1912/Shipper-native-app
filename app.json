@@ -3,6 +3,10 @@
   "displayName": "Shipper",
   "expo": {
     "name": "shipper",
-    "slug": "shipper"
+    "slug": "shipper",
+    "splash": {
+      "image": "./src/assets/images/dev_ship.png",
+      "resizeMode": "cover"
+    }
   }
 }

@@ -40,7 +40,7 @@ const DetailWaitingForItScreen = () => {
             flexWrap: 'wrap',
             fontSize: 11,
           },
-          description: 'Cập nhật trạng thái đơn hàng thành công !',
+          description: 'Cập nhật thành công !',
           status: 'success',
           placement: 'top',
           isClosable: true,
@@ -61,7 +61,6 @@ const DetailWaitingForItScreen = () => {
           return;
         }
 
-        console.log(res?.data);
         setListShop(res?.data?.List);
         setShopInfo(res?.data);
         setIsGettingData(false);
@@ -78,7 +77,6 @@ const DetailWaitingForItScreen = () => {
     };
   }, [id, tab]);
 
-  console.log('DonHangID', orderID);
   const renderListOrder = listShop?.map((item) => {
     return (
       <Box key={item.MaDonHang} style={styles.orderItem}>

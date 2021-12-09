@@ -1,7 +1,8 @@
 import React from 'react';
-import { NativeBaseProvider, extendTheme } from 'native-base';
+import { NativeBaseProvider, extendTheme, Box, Text, Spinner } from 'native-base';
 import RootNavigation from '@/navigations/RootNavigation';
 import ToastAlert from '@/components/ToastAlert';
+import * as SplashScreen from 'expo-splash-screen';
 
 // Define the config
 const config = {

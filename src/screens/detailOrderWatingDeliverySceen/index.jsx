@@ -1,10 +1,11 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { Box, Text, Pressable } from 'native-base';
+import { Box, Text, Pressable, useToast } from 'native-base';
 import { createStyles } from './style';
 import { ScrollView } from 'react-native';
 import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
+import { changeStatus } from '@/services/changeStatus';
 
 //chờ giao
 function DetailOrderWaitingDeliveryScreen() {
@@ -12,11 +13,43 @@ function DetailOrderWaitingDeliveryScreen() {
     return createStyles();
   }, []);
 
+  const toast = useToast();
   const route = useRoute();
   const { id, tab } = route?.params;
 
   const [isGettingData, setIsGettingData] = useState(false);
   const [shopInfo, setShopInfo] = useState();
+  const [orderID, setOrderID] = useState();
+
+  const handleChangeStatus = (id, status) => {
+    changeStatus({ id: id, status: status })
+      .then((res) => {
+        if (res?.data?.msg === 'Error') {
+          toast.show({
+            description: 'Đã có lỗi xảy ra !',
+            status: 'error',
+            placement: 'top',
+            isClosable: true,
+          });
+          return;
+        }
+
+        toast.show({
+          baseStyle: {
+            display: 'flex',
+            flexWrap: 'wrap',
+            fontSize: 11,
+          },
+          description: 'Cập nhật thành công !',
+          status: 'success',
+          placement: 'top',
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     setIsGettingData(true);
@@ -114,12 +147,18 @@ function DetailOrderWaitingDeliveryScreen() {
               </Text>
             </Box>
             <Box style={styles.btnGroupInner}>
-              <Pressable style={styles.btnInner1}>
+              <Pressable
+                style={styles.btnInner1}
+                onPress={() => handleChangeStatus(shopInfo?.DonHangID, 'DG')}
+              >
                 <Box style={styles.btnTextTitle}>
                   <Text style={styles.btnTextTitleInner}>{'Đã giao'}</Text>
                 </Box>
               </Pressable>
-              <Pressable style={styles.btnInner2}>
+              <Pressable
+                style={styles.btnInner2}
+                onPress={() => handleChangeStatus(shopInfo?.DonHangID, 'CT')}
+              >
                 <Box style={styles.btnTextTitle}>
                   <Text style={styles.btnTextTitleInner}>{'Chờ trả'}</Text>
                 </Box>

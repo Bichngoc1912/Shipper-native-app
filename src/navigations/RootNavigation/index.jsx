@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SCREENS_NAME } from '@/constants/screen';
@@ -9,10 +9,19 @@ import DetailWaitingForItScreen from '@/screens/detailWaitingForItScreen';
 import DetailOrderWaitingDeliveryScreen from '@/screens/detailOrderWatingDeliverySceen';
 import DetailOrderDeliverdScreen from '@/screens/detailOrderDeliveredScreen';
 import { Host, Portal } from 'react-native-portalize';
+import { getTokenFromStore } from '@/helper/tokenHelpers';
 
 const RootStack = createStackNavigator();
 
 const RootNavigation = () => {
+  useEffect(() => {
+    (async () => {
+      const test = await getTokenFromStore();
+
+      console.log('test', test);
+    })();
+  }, []);
+
   return (
     <NavigationContainer>
       <Host>
