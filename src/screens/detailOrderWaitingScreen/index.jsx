@@ -45,9 +45,9 @@ function DetailOrderWaitingScreen() {
     };
   }, [id, tab]);
 
-  const renderListOrder = listShop?.map((item) => {
+  const renderListOrder = listShop?.map((item, idx) => {
     return (
-      <Box key={item.MaDonHang} style={styles.orderItem}>
+      <Box key={idx} style={styles.orderItem}>
         <Box style={styles.orderItemTitleBox}>
           <Checkbox
             accessibilityLabel="This is a dummy checkbox"

@@ -1,8 +1,9 @@
 export const SCREENS_NAME = {
-  HOME_NAVIGATOR: 'HomeNavigator',
-  LIST_ORDER: 'ListOrder',
-  DETAIL_ORDER_WAITING: 'DetailOrderWaiting',
-  DETAIL_WAITING_FOR_IT: 'DetailWaitingForIt',
-  DETAIL_WAITING_DELIVEY: 'DetailWaitingDelivery',
-  DETAIL_DELIVERD: 'DetailDeliverd',
+  HOME_NAVIGATOR: 'Danh sách đơn hàng ',
+  LIST_ORDER: 'Danh sách đơn ',
+  DETAIL_ORDER_WAITING: 'Chi tiết đơn hàng trả lại',
+  DETAIL_WAITING_FOR_IT: 'Chi tiết đơn hàng chờ lấy',
+  DETAIL_WAITING_DELIVEY: 'Chi tiết đơn hàng chờ giao',
+  DETAIL_DELIVERD: 'Chi tiết đơn hàng đã giao',
+  LOGIN: 'Đăng nhập ',
 };

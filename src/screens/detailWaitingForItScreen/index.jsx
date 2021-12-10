@@ -77,15 +77,15 @@ const DetailWaitingForItScreen = () => {
     };
   }, [id, tab]);
 
-  const renderListOrder = listShop?.map((item) => {
+  const renderListOrder = listShop?.map((item, idx) => {
     return (
-      <Box key={item.MaDonHang} style={styles.orderItem}>
+      <Box key={idx} style={styles.orderItem}>
         <Box style={styles.orderItemTitleBox}>
           <Checkbox
             accessibilityLabel="This is a dummy checkbox"
             colorScheme="green"
             size="sm"
-            onPress={() => setOrderID(item.DonHangID)}
+            onPress={() => setOrderID(orderID + '-' + item.DonHangID)}
           />
           <Text style={styles.orderItemTitle}>
             <Text style={styles.orderTitleBold}>{item.MaDonHang} </Text>

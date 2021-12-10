@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SCREENS_NAME } from '@/constants/screen';
@@ -10,18 +10,20 @@ import DetailOrderWaitingDeliveryScreen from '@/screens/detailOrderWatingDeliver
 import DetailOrderDeliverdScreen from '@/screens/detailOrderDeliveredScreen';
 import { Host, Portal } from 'react-native-portalize';
 import { getTokenFromStore } from '@/helper/tokenHelpers';
+import LoginScreen from '@/screens/userScreen/loginScreen';
 
 const RootStack = createStackNavigator();
 
 const RootNavigation = () => {
+  const [isLogin, setIsLogin] = useState(false);
+
   useEffect(() => {
     (async () => {
       const test = await getTokenFromStore();
-
-      console.log('test', test);
     })();
   }, []);
 
+  console.log('isLogin', isLogin);
   return (
     <NavigationContainer>
       <Host>
@@ -54,6 +56,11 @@ const RootNavigation = () => {
           <RootStack.Screen
             name={SCREENS_NAME.DETAIL_DELIVERD}
             component={DetailOrderDeliverdScreen}
+          ></RootStack.Screen>
+
+          <RootStack.Screen
+            name={SCREENS_NAME.LOGIN}
+            component={LoginScreen}
           ></RootStack.Screen>
         </RootStack.Navigator>
       </Host>

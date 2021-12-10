@@ -4,7 +4,7 @@ export async function getListWaiForItTab({ tab, group }) {
   const reqParam = {
     tab: tab,
     group: group,
-    code: 'ABCE0123456789',
+    code: 'L4AUU54OCBL8QKF',
   };
 
   try {
@@ -19,9 +19,10 @@ export async function getListReturnTab({ tab, group }) {
     tab: tab,
     id: 1,
     group: group,
-    code: 'ABCE0123456789',
+    code: 'L4AUU54OCBL8QKF',
   };
 
+  console.log(reqParam);
   try {
     return await httpClient.get('tab-list.html', reqParam);
   } catch (err) {
