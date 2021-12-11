@@ -8,17 +8,21 @@ import DetailOrderWaitingScreen from '@/screens/detailOrderWaitingScreen';
 import DetailWaitingForItScreen from '@/screens/detailWaitingForItScreen';
 import DetailOrderWaitingDeliveryScreen from '@/screens/detailOrderWatingDeliverySceen';
 import DetailOrderDeliverdScreen from '@/screens/detailOrderDeliveredScreen';
-import { Host, Portal } from 'react-native-portalize';
-import { getTokenFromStore } from '@/helper/tokenHelpers';
+import { Host } from 'react-native-portalize';
 import LoginScreen from '@/screens/userScreen/loginScreen';
+import { useSelector } from 'react-redux';
 
 const RootStack = createStackNavigator();
 
 const RootNavigation = () => {
+  const codeLogin = useSelector((state) => state.userAccount.code);
+
   return (
     <NavigationContainer>
       <Host>
-        <RootStack.Navigator initialRouteName={SCREENS_NAME.LOGIN}>
+        <RootStack.Navigator
+          initialRouteName={codeLogin ? SCREENS_NAME.LIST_ORDER : SCREENS_NAME.LOGIN}
+        >
           <RootStack.Screen
             name={SCREENS_NAME.HOME_NAVIGATOR}
             component={HomeNavigator}

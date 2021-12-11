@@ -12,6 +12,10 @@ const userAccountSlices = createSlice({
     groupDG: undefined,
     groupTL: undefined,
     listOrderCL: undefined,
+    streetNameCL: undefined,
+    streetNameCG: undefined,
+    streetNameDG: undefined,
+    streetNameTL: undefined,
   },
   reducers: {
     setIsLogin(state, action) {
@@ -34,6 +38,15 @@ const userAccountSlices = createSlice({
     },
     setListOrderCL(state, action) {
       state.listOrderCL = action.payload;
+    },
+    setStreetNameCL(state, action) {
+      state.streetNameCL = action.payload;
+    },
+    setStreetNameCG(state, action) {
+      state.streetNameCG = action.payload;
+    },
+    setStreetNameTL(state, action) {
+      state.streetNameTL = action.payload;
     },
   },
 });

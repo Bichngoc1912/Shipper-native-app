@@ -1,6 +1,6 @@
 import { httpClient } from '@/helper/index';
 
-export async function getListStreetName({ code }) {
+export async function getListStreetNameCL({ code }) {
   const reqParam = {
     tab: 'CL',
     code: code,
@@ -13,10 +13,10 @@ export async function getListStreetName({ code }) {
   }
 }
 
-export async function getListStreetNameCG(code) {
+export async function getListStreetNameCG({ code }) {
   const reqParam = {
     tab: 'CG',
-    code: code ?? code,
+    code: code,
   };
 
   try {
@@ -26,10 +26,10 @@ export async function getListStreetNameCG(code) {
   }
 }
 
-export async function getListStreetNameDG(code) {
+export async function getListStreetNameDG({ code }) {
   const reqParam = {
     tab: 'DG',
-    code: code ?? code,
+    code: code,
   };
 
   try {
@@ -42,7 +42,7 @@ export async function getListStreetNameDG(code) {
 export async function getListStreetNameTL({ code }) {
   const reqParam = {
     tab: 'TL',
-    code: code ?? code,
+    code: code,
   };
 
   try {

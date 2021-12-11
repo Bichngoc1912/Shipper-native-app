@@ -10,7 +10,7 @@ import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameBottomSheet from '@/components/ListStreetNameCL';
 import EmptyListOrder from '@/components/EmptyListOrder';
 import { useSelector, useDispatch } from 'react-redux';
-import { getListStreetNameTL } from '@/services/getListAddress';
+import { getListStreetNameCL } from '@/services/getListAddress';
 import { userAccountActions } from '@/store/userReducer';
 import { isEmpty } from 'lodash';
 
@@ -29,6 +29,7 @@ function WaitForItTab() {
 
   const code = useSelector((state) => state.userAccount.code);
   const groupId = useSelector((state) => state.userAccount.groupCL);
+  const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameCL);
 
   const modalRef = useRef(null);
   const onOpen = () => {
@@ -39,7 +40,7 @@ function WaitForItTab() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListStreetNameTL({ code: code })
+    getListStreetNameCL({ code: code })
       .then((res) => {
         if (!isComponentMounted) {
           return;
@@ -149,7 +150,9 @@ function WaitForItTab() {
               <Box style={styles.container}>
                 <Pressable onPress={() => onOpen()}>
                   <Box style={styles.addrBtnSection}>
-                    <Text style={styles.addrBtnText}>{streetName}</Text>
+                    <Text style={styles.addrBtnText}>
+                      {streetNameFromRedux ?? streetName}
+                    </Text>
                     {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
                   </Box>
                 </Pressable>

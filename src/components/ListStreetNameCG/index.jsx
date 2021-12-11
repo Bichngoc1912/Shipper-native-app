@@ -5,11 +5,12 @@ import { Portal } from 'react-native-portalize';
 import { CreateStyles } from './style';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { getListStreetNameCG } from '@/services/getListAddress';
+import { useDispatch } from 'react-redux';
+import { userAccountActions } from '@/store/userReducer';
 
 const ListStreetNameCGBottomSheet = (props) => {
-  const { modal, tab } = props;
-  const [listStreet, setListStreet] = useState();
+  const { modal, data } = props;
+  const dispatch = useDispatch();
 
   const onClose = () => {
     modal.current?.close();
@@ -19,32 +20,14 @@ const ListStreetNameCGBottomSheet = (props) => {
     return CreateStyles();
   });
 
-  useEffect(() => {
-    let isComponentMounted = true;
+  const handleClickStreet = (street) => {
+    dispatch(userAccountActions.setGroupCG(street));
+    onClose();
+  };
 
-    getListStreetNameCG()
-      .then((res) => {
-        if (!res?.data || !isComponentMounted) {
-          return;
-        }
-
-        setListStreet(res?.data?.List);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        if (!isComponentMounted) return;
-      });
-
-    return () => {
-      isComponentMounted = false;
-    };
-  }, [tab]);
-
-  const renderListStreetName = listStreet?.map((item) => {
+  const renderListStreetName = data?.map((item) => {
     return (
-      <Pressable key={item.GroupID}>
+      <Pressable key={item.GroupID} onPress={() => handleClickStreet(item.GroupID)}>
         <Box style={styles.streetNameItem}>
           <Text>{item.Name}</Text>
         </Box>

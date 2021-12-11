@@ -6,6 +6,7 @@ import { useRoute, useNavigation } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 import { changeStatus } from '@/services/changeStatus';
 import { SCREENS_NAME } from '@/constants/screen';
+import { useSelector } from 'react-redux';
 
 //Chờ lấy
 const DetailWaitingForItScreen = () => {
@@ -23,8 +24,10 @@ const DetailWaitingForItScreen = () => {
   const [listShop, setListShop] = useState();
   const [shopInfo, setShopInfo] = useState();
 
+  const code = useSelector((state) => state.userAccount.code);
+
   const handleChangeStatus = (id, status) => {
-    changeStatus({ id: id, status: status })
+    changeStatus({ id: id, status: status, code: code })
       .then((res) => {
         if (res?.data?.msg === 'Error') {
           toast.show({
@@ -36,6 +39,7 @@ const DetailWaitingForItScreen = () => {
           return;
         }
 
+        console.log('lakjdhfkadf', res?.data);
         toast.show({
           baseStyle: {
             display: 'flex',

@@ -9,7 +9,12 @@ import { getListWaitDeliveryTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameCGBottomSheet from '@/components/ListStreetNameCG';
 import EmptyListOrder from '@/components/EmptyListOrder';
+import { useSelector, useDispatch } from 'react-redux';
+import { getListStreetNameCG } from '@/services/getListAddress';
+import { isEmpty } from 'lodash';
+import { userAccountActions } from '@/store/userReducer';
 
+//Cho giao
 function WaitForDeliveryScreen() {
   const styles = useMemo(() => {
     return createStyles();
@@ -18,6 +23,9 @@ function WaitForDeliveryScreen() {
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
   const [isEmptyListOrder, setIsEmptyListOrder] = useState(false);
+  const [listStreets, setListStreet] = useState();
+  const [streetName, setStreetName] = useState('');
+  const dispatch = useDispatch();
 
   const navigation = useNavigation();
 
@@ -26,17 +34,49 @@ function WaitForDeliveryScreen() {
     modalRef.current?.open();
   };
 
-  useEffect(() => {
-    setIsGettingData(true);
-    let isComponentMounted = true;
+  const code = useSelector((state) => state.userAccount.code);
+  const groupId = useSelector((state) => state.userAccount.groupCG);
 
-    getListWaitDeliveryTab({ tab: 'CG', group: 7 })
+  useEffect(() => {
+    let isComponentMounted = true;
+    getListStreetNameCG({ code: code })
       .then((res) => {
         if (!isComponentMounted) {
           return;
         }
 
         if (!res?.data?.List) {
+          return;
+        }
+
+        dispatch(userAccountActions.setGroupCG(res?.data?.List[0].GroupID));
+        setStreetName(res?.data?.List[0].Name);
+        setListStreet(res?.data?.List);
+      })
+      .catch((err) => console.log('street CG', err));
+
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsGettingData(true);
+    let isComponentMounted = true;
+
+    getListWaitDeliveryTab({ tab: 'CG', group: groupId, code })
+      .then((res) => {
+        console.log('res cho giao', res?.data);
+        if (!isComponentMounted) {
+          return;
+        }
+
+        if (!res?.data?.List) {
+          setIsGettingData(false);
+          return;
+        }
+
+        if (isEmpty(res?.data?.List)) {
           setIsEmptyListOrder(true);
           setIsGettingData(false);
           return;
@@ -56,7 +96,7 @@ function WaitForDeliveryScreen() {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [groupId]);
 
   const renderListWaiting = listShop?.map((item) => {
     return (
@@ -99,7 +139,7 @@ function WaitForDeliveryScreen() {
             <Box style={styles.container}>
               <Pressable onPress={() => onOpen()}>
                 <Box style={styles.addrBtnSection}>
-                  <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                  <Text style={styles.addrBtnText}>{streetName}</Text>
                   {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
                 </Box>
               </Pressable>
@@ -109,7 +149,9 @@ function WaitForDeliveryScreen() {
           )}
         </>
       )}
-      <ListStreetNameCGBottomSheet modal={modalRef} tab={'CG'} />
+      {!listStreets ? null : (
+        <ListStreetNameCGBottomSheet modal={modalRef} tab={'CG'} data={listStreets} />
+      )}
     </>
   );
 }
