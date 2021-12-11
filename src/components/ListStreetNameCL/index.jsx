@@ -5,46 +5,29 @@ import { Portal } from 'react-native-portalize';
 import { CreateStyles } from './style';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { getListStreetName } from '@/services/getListAddress';
+import { useDispatch } from 'react-redux';
+import { userAccountActions } from '@/store/userReducer';
 
 const ListStreetNameBottomSheet = (props) => {
-  const { modal, tab } = props;
-  const [listStreet, setListStreet] = useState();
+  const { modal, data } = props;
 
   const onClose = () => {
     modal.current?.close();
   };
 
+  const dispatch = useDispatch();
+
   const styles = useMemo(() => {
     return CreateStyles();
   });
 
-  useEffect(() => {
-    let isComponentMounted = true;
+  const handleClickStreetName = (street) => {
+    dispatch(userAccountActions.setGroupCL(street));
+  };
 
-    getListStreetName({ tab: tab })
-      .then((res) => {
-        if (!res?.data || !isComponentMounted) {
-          return;
-        }
-
-        setListStreet(res?.data?.List);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        if (!isComponentMounted) return;
-      });
-
-    return () => {
-      isComponentMounted = false;
-    };
-  }, [tab]);
-
-  const renderListStreetName = listStreet?.map((item) => {
+  const renderListStreetName = data?.map((item) => {
     return (
-      <Pressable key={item.GroupID}>
+      <Pressable key={item.GroupID} onPress={() => handleClickStreetName(item.GroupID)}>
         <Box style={styles.streetNameItem}>
           <Text>{item.Name}</Text>
         </Box>
@@ -56,7 +39,7 @@ const ListStreetNameBottomSheet = (props) => {
     <Portal>
       <Modalize
         ref={modal}
-        adjustToContentHeight={false}
+        // adjustToContentHeight={false}
         HeaderComponent={
           <Box style={styles.header}>
             <Text style={styles.headerText}>Địa chỉ đường</Text>

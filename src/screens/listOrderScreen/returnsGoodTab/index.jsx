@@ -9,6 +9,7 @@ import { getListReturnTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameTLBottomSheet from '@/components/ListStreetNameTL';
 import EmptyListOrder from '@/components/EmptyListOrder';
+import { useSelector } from 'react-redux';
 
 function ReturnsGoodTab() {
   const styles = useMemo(() => {
@@ -26,11 +27,13 @@ function ReturnsGoodTab() {
     modalRef.current?.open();
   };
 
+  const code = useSelector((state) => state.userAccount.code);
+
   useEffect(() => {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListReturnTab({ tab: 'TL', group: 10 })
+    getListReturnTab({ tab: 'TL', group: 10, code: code })
       .then((res) => {
         if (!isComponentMounted) {
           return;

@@ -5,7 +5,7 @@ import { createStyles } from './style';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS_NAME } from '@/constants/screen';
 import { colorPalletter } from '@/assets/theme/color';
-import { getListWaiForItTab } from '@/services';
+import { getListWaitDelivered } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameDGBottomSheet from '@/components/ListStreetNameDG';
 import EmptyListOrder from '@/components/EmptyListOrder';
@@ -30,7 +30,7 @@ function DeliveredScreen() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListWaiForItTab({ tab: 'DG', group: 6 })
+    getListWaitDelivered({ tab: 'DG', group: 6 })
       .then((res) => {
         if (!isComponentMounted) {
           return;

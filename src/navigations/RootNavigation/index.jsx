@@ -15,19 +15,10 @@ import LoginScreen from '@/screens/userScreen/loginScreen';
 const RootStack = createStackNavigator();
 
 const RootNavigation = () => {
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const test = await getTokenFromStore();
-    })();
-  }, []);
-
-  console.log('isLogin', isLogin);
   return (
     <NavigationContainer>
       <Host>
-        <RootStack.Navigator initialRouteName={SCREENS_NAME.LIST_ORDER}>
+        <RootStack.Navigator initialRouteName={SCREENS_NAME.LOGIN}>
           <RootStack.Screen
             name={SCREENS_NAME.HOME_NAVIGATOR}
             component={HomeNavigator}

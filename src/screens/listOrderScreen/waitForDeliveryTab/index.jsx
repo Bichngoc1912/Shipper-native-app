@@ -5,7 +5,7 @@ import { createStyles } from './style';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS_NAME } from '@/constants/screen';
 import { colorPalletter } from '@/assets/theme/color';
-import { getListWaiForItTab } from '@/services';
+import { getListWaitDeliveryTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameCGBottomSheet from '@/components/ListStreetNameCG';
 import EmptyListOrder from '@/components/EmptyListOrder';
@@ -30,7 +30,7 @@ function WaitForDeliveryScreen() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListWaiForItTab({ tab: 'CG', group: 7 })
+    getListWaitDeliveryTab({ tab: 'CG', group: 7 })
       .then((res) => {
         if (!isComponentMounted) {
           return;
@@ -96,18 +96,16 @@ function WaitForDeliveryScreen() {
           {isEmptyListOrder ? (
             <EmptyListOrder />
           ) : (
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <Box style={styles.container}>
-                <Pressable onPress={() => onOpen()}>
-                  <Box style={styles.addrBtnSection}>
-                    <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
-                    {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
-                  </Box>
-                </Pressable>
+            <Box style={styles.container}>
+              <Pressable onPress={() => onOpen()}>
+                <Box style={styles.addrBtnSection}>
+                  <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                  {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
+                </Box>
+              </Pressable>
 
-                {renderListWaiting}
-              </Box>
-            </ScrollView>
+              <ScrollView showsVerticalScrollIndicator>{renderListWaiting}</ScrollView>
+            </Box>
           )}
         </>
       )}

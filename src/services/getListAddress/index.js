@@ -1,13 +1,13 @@
 import { httpClient } from '@/helper/index';
 
-export async function getListStreetName(code) {
+export async function getListStreetName({ code }) {
   const reqParam = {
     tab: 'CL',
-    code: code ?? 'CQPDS28X447S07U',
+    code: code,
   };
 
   try {
-    return await httpClient.post('group.html', reqParam);
+    return await httpClient.get('group.html', reqParam);
   } catch (err) {
     return err;
   }
@@ -16,7 +16,7 @@ export async function getListStreetName(code) {
 export async function getListStreetNameCG(code) {
   const reqParam = {
     tab: 'CG',
-    code: code ?? 'CQPDS28X447S07U',
+    code: code ?? code,
   };
 
   try {
@@ -29,7 +29,7 @@ export async function getListStreetNameCG(code) {
 export async function getListStreetNameDG(code) {
   const reqParam = {
     tab: 'DG',
-    code: code ?? 'CQPDS28X447S07U',
+    code: code ?? code,
   };
 
   try {
@@ -39,10 +39,10 @@ export async function getListStreetNameDG(code) {
   }
 }
 
-export async function getListStreetNameTL(code) {
+export async function getListStreetNameTL({ code }) {
   const reqParam = {
     tab: 'TL',
-    code: code ?? 'CQPDS28X447S07U',
+    code: code ?? code,
   };
 
   try {

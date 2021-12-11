@@ -5,11 +5,12 @@ import { Portal } from 'react-native-portalize';
 import { CreateStyles } from './style';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { getListStreetNameTL } from '@/services/getListAddress';
+import { useDispatch, useSelector } from 'react-redux';
+import { userAccountActions } from '@/store/userReducer';
 
 const ListStreetNameTLBottomSheet = (props) => {
-  const { modal, tab } = props;
-  const [listStreet, setListStreet] = useState();
+  const { modal, data } = props;
+  const dispatch = useDispatch();
 
   const onClose = () => {
     modal.current?.close();
@@ -19,30 +20,7 @@ const ListStreetNameTLBottomSheet = (props) => {
     return CreateStyles();
   });
 
-  useEffect(() => {
-    let isComponentMounted = true;
-
-    getListStreetNameTL()
-      .then((res) => {
-        if (!res?.data || !isComponentMounted) {
-          return;
-        }
-
-        setListStreet(res?.data?.List);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        if (!isComponentMounted) return;
-      });
-
-    return () => {
-      isComponentMounted = false;
-    };
-  }, [tab]);
-
-  const renderListStreetName = listStreet?.map((item) => {
+  const renderListStreetName = data?.map((item) => {
     return (
       <Pressable key={item.GroupID}>
         <Box style={styles.streetNameItem}>

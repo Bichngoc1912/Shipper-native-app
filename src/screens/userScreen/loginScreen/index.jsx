@@ -1,13 +1,21 @@
 import React, { useMemo } from 'react';
-import { Box, Text, Input, Button } from 'native-base';
+import { Box, useToast, Input, Button } from 'native-base';
 import { login } from '@/services/User/login';
 import { useForm, Controller } from 'react-hook-form';
 import { createStyle } from './style';
+import { SCREENS_NAME } from '@/constants/screen';
+import { useNavigation } from '@react-navigation/native';
+import { userAccountActions } from '@/store/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LoginScreen = () => {
   const styles = useMemo(() => {
     return createStyle();
   }, []);
+
+  const toast = useToast();
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const {
     control,
@@ -26,7 +34,19 @@ const LoginScreen = () => {
       password: data.password,
     })
       .then((res) => {
-        console.log(res);
+        if (res?.data?.result !== 'OK') {
+          toast.show({
+            description: 'Đã có lỗi xảy ra !',
+            status: 'error',
+            placement: 'top',
+            isClosable: true,
+          });
+          return;
+        }
+
+        dispatch(userAccountActions.setIsLogin(true));
+        dispatch(userAccountActions.setCode(res?.data?.code));
+        navigation.replace(SCREENS_NAME.LIST_ORDER);
       })
       .catch((err) => console.log(err));
   };

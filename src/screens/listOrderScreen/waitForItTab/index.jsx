@@ -9,6 +9,10 @@ import { getListWaiForItTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameBottomSheet from '@/components/ListStreetNameCL';
 import EmptyListOrder from '@/components/EmptyListOrder';
+import { useSelector, useDispatch } from 'react-redux';
+import { getListStreetNameTL } from '@/services/getListAddress';
+import { userAccountActions } from '@/store/userReducer';
+import { isEmpty } from 'lodash';
 
 function WaitForItTab() {
   const styles = useMemo(() => {
@@ -18,8 +22,13 @@ function WaitForItTab() {
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
   const [isEmptyListOrder, setIsEmptyListOrder] = useState(false);
-
+  const [listStreets, setListStreet] = useState();
+  const [streetName, setStreetName] = useState('');
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const code = useSelector((state) => state.userAccount.code);
+  const groupId = useSelector((state) => state.userAccount.groupCL);
 
   const modalRef = useRef(null);
   const onOpen = () => {
@@ -30,7 +39,34 @@ function WaitForItTab() {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListWaiForItTab({ tab: 'CL', group: 9 })
+    getListStreetNameTL({ code: code })
+      .then((res) => {
+        if (!isComponentMounted) {
+          return;
+        }
+
+        if (!res?.data?.List) {
+          return;
+        }
+
+        dispatch(userAccountActions.setGroupCL(res?.data?.List[0].GroupID));
+        setStreetName(res?.data?.List[0].Name);
+        setListStreet(res?.data?.List);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsGettingData(true);
+    let isComponentMounted = true;
+
+    getListWaiForItTab({ tab: 'CL', group: groupId, code: code })
       .then((res) => {
         if (!isComponentMounted) {
           return;
@@ -38,7 +74,12 @@ function WaitForItTab() {
 
         if (!res?.data?.List) {
           setIsGettingData(false);
+          return;
+        }
+
+        if (isEmpty(res?.data?.List)) {
           setIsEmptyListOrder(true);
+          setIsGettingData(false);
           return;
         }
 
@@ -56,7 +97,7 @@ function WaitForItTab() {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [groupId]);
 
   const renderListWaiting = listShop?.map((item, idx) => {
     return (
@@ -88,7 +129,9 @@ function WaitForItTab() {
           </Button>
           <Text>{item.TrangThai}</Text>
         </Box>
-        <ListStreetNameBottomSheet modal={modalRef} tab={'CL'} />
+        {!listStreets ? null : (
+          <ListStreetNameBottomSheet modal={modalRef} tab={'CL'} data={listStreets} />
+        )}
       </Box>
     );
   });
@@ -106,7 +149,7 @@ function WaitForItTab() {
               <Box style={styles.container}>
                 <Pressable onPress={() => onOpen()}>
                   <Box style={styles.addrBtnSection}>
-                    <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                    <Text style={styles.addrBtnText}>{streetName}</Text>
                     {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
                   </Box>
                 </Pressable>

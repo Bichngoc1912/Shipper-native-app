@@ -14,6 +14,5 @@ export async function login({ userName, password }) {
   }
   formBody = formBody.join('&');
 
-  console.log('reqParam', formBody);
   return httpClient.post('shipper-sign-in.html', formBody);
 }

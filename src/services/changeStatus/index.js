@@ -4,7 +4,7 @@ export async function changeStatus({ id, status, code }) {
   const reqParam = {
     id: id,
     status: status,
-    code: code,
+    code: code ?? code,
   };
 
   try {

@@ -2,9 +2,10 @@ import React, { useMemo, useEffect, useState } from 'react';
 import { Box, Text, ScrollView, Pressable, Checkbox, useToast } from 'native-base';
 import { createStyles } from './style';
 import { getDetailOrder } from '@/services';
-import { useRoute } from '@react-navigation/core';
+import { useRoute, useNavigation } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 import { changeStatus } from '@/services/changeStatus';
+import { SCREENS_NAME } from '@/constants/screen';
 
 //Chờ lấy
 const DetailWaitingForItScreen = () => {
@@ -13,6 +14,7 @@ const DetailWaitingForItScreen = () => {
     return createStyles();
   });
 
+  const navigation = useNavigation();
   const toast = useToast();
   const route = useRoute();
   const { id, tab } = route?.params;
@@ -45,6 +47,10 @@ const DetailWaitingForItScreen = () => {
           placement: 'top',
           isClosable: true,
         });
+
+        setTimeout(() => {
+          navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
@@ -85,7 +91,14 @@ const DetailWaitingForItScreen = () => {
             accessibilityLabel="This is a dummy checkbox"
             colorScheme="green"
             size="sm"
-            onPress={() => setOrderID(orderID + '-' + item.DonHangID)}
+            onPress={() => {
+              if (orderID) {
+                setOrderID(orderID + '-' + item.DonHangID);
+                return;
+              }
+
+              setOrderID(item.DonHangID);
+            }}
           />
           <Text style={styles.orderItemTitle}>
             <Text style={styles.orderTitleBold}>{item.MaDonHang} </Text>
@@ -103,7 +116,7 @@ const DetailWaitingForItScreen = () => {
         <LoadingComponent />
       ) : (
         <Box style={styles.container}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Box style={styles.sellerInfoSection}>
               <Text style={styles.sellerInfoPhoneTxt}>{shopInfo?.DienThoai}</Text>
               <Text style={styles.sellerInfoTitle}>

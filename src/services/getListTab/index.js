@@ -1,10 +1,10 @@
 import { httpClient } from '@/helper/index';
 
-export async function getListWaiForItTab({ tab, group }) {
+export async function getListWaiForItTab({ tab, group, code }) {
   const reqParam = {
     tab: tab,
     group: group,
-    code: 'L4AUU54OCBL8QKF',
+    code: code,
   };
 
   try {
@@ -14,15 +14,42 @@ export async function getListWaiForItTab({ tab, group }) {
   }
 }
 
-export async function getListReturnTab({ tab, group }) {
+export async function getListWaitDeliveryTab({ tab, group, code }) {
+  const reqParam = {
+    tab: tab,
+    group: group,
+    code: code,
+  };
+
+  try {
+    return await httpClient.get('tab-list.html', reqParam);
+  } catch (err) {
+    return err;
+  }
+}
+
+export async function getListWaitDelivered({ tab, group, code }) {
+  const reqParam = {
+    tab: tab,
+    group: group,
+    code: code,
+  };
+
+  try {
+    return await httpClient.get('tab-list.html', reqParam);
+  } catch (err) {
+    return err;
+  }
+}
+
+export async function getListReturnTab({ tab, group, code }) {
   const reqParam = {
     tab: tab,
     id: 1,
     group: group,
-    code: 'L4AUU54OCBL8QKF',
+    code: code,
   };
 
-  console.log(reqParam);
   try {
     return await httpClient.get('tab-list.html', reqParam);
   } catch (err) {

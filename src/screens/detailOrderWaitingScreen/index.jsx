@@ -2,9 +2,10 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { Box, Text, Checkbox, Pressable } from 'native-base';
 import { createStyles } from './style';
 import { ScrollView } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import LoadingComponent from '@/components/Loading/index';
 import { getDetailOrder } from '@/services';
+import { SCREENS_NAME } from '@/constants/screen';
 
 //Trả lại
 function DetailOrderWaitingScreen() {

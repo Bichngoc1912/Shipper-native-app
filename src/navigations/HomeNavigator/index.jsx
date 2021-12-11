@@ -6,18 +6,11 @@ import WaitForDeliveryTab from '@/screens/listOrderScreen/waitForDeliveryTab';
 import DeliveredTab from '@/screens/listOrderScreen/deliveredTab';
 import ReturnGoodTab from '@/screens/listOrderScreen/returnsGoodTab';
 import { Box } from 'native-base';
-import { SCREENS_NAME } from '@/constants/screen';
 import { colorPalletter } from '@/assets/theme/color';
 
 const Tab = createMaterialTopTabNavigator();
 
 const HomeNavigator = () => {
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    navigation.navigate({ name: SCREENS_NAME.LOGIN });
-  }, []);
-
   return (
     <Box
       style={{
