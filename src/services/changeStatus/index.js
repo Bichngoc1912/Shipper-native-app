@@ -7,7 +7,6 @@ export async function changeStatus({ id, status, code }) {
     code: code,
   };
 
-  console.log('change status reqParam', reqParam);
   try {
     return await httpClient.get('update-status.html', reqParam);
   } catch (err) {
