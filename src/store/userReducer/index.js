@@ -39,8 +39,8 @@ const userAccountSlices = createSlice({
     setListOrderCL(state, action) {
       state.listOrderCL = action.payload;
     },
-    setStreetNameCL(state, action) {
-      state.streetNameCL = action.payload;
+    setStreetNameDG(state, action) {
+      state.streetNameDG = action.payload;
     },
     setStreetNameCG(state, action) {
       state.streetNameCG = action.payload;

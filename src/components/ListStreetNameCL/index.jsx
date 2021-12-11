@@ -24,6 +24,7 @@ const ListStreetNameBottomSheet = (props) => {
   const handleClickStreetName = (groupId, streetName) => {
     dispatch(userAccountActions.setGroupCL(groupId));
     dispatch(userAccountActions.setStreetNameCL(streetName));
+    onClose();
   };
 
   const renderListStreetName = data?.map((item) => {

@@ -9,6 +9,10 @@ import { getListWaitDelivered } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameDGBottomSheet from '@/components/ListStreetNameDG';
 import EmptyListOrder from '@/components/EmptyListOrder';
+import { userAccountActions } from '@/store/userReducer';
+import { getListStreetNameDG } from '@/services/getListAddress';
+import { useSelector, useDispatch } from 'react-redux';
+import { isEmpty } from 'lodash';
 
 function DeliveredScreen() {
   const styles = useMemo(() => {
@@ -25,13 +29,40 @@ function DeliveredScreen() {
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
   const [isEmptyListOrder, setIsEmptyListOrder] = useState(false);
+  const [listStreets, setListStreet] = useState();
+  const [streetName, setStreetName] = useState('');
+  const dispatch = useDispatch();
+
+  const code = useSelector((state) => state.userAccount.code);
+  const groupId = useSelector((state) => state.userAccount.groupDG);
+  const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameDG);
 
   useEffect(() => {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListWaitDelivered({ tab: 'DG', group: 6 })
+    getListStreetNameDG({ code: code }).then((res) => {
+      if (!isComponentMounted) {
+        return;
+      }
+
+      if (!res?.data?.List) {
+        return;
+      }
+
+      dispatch(userAccountActions.setGroupDG(res?.data?.List[0].GroupID));
+      setStreetName(res?.data?.List[0].Name);
+      setListStreet(res?.data?.List);
+    });
+  }, []);
+
+  useEffect(() => {
+    setIsGettingData(true);
+    let isComponentMounted = true;
+
+    getListWaitDelivered({ tab: 'DG', group: groupId, code: code })
       .then((res) => {
+        console.log('getListStreetNameDG', res?.data?.List[0]);
         if (!isComponentMounted) {
           return;
         }
@@ -56,7 +87,7 @@ function DeliveredScreen() {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [groupId]);
 
   const renderListWaiting = listShop?.map((item) => {
     return (
@@ -65,7 +96,7 @@ function DeliveredScreen() {
           <Pressable onPress={() => Linking.openURL(`tel:${item.DienThoai}`)}>
             <Text style={styles.listOrderItemTextPhone}>{item.DienThoai}</Text>
           </Pressable>
-          <Text>{item.TenKH}</Text>
+          <Text>{item.HoTen}</Text>
           <Text>{item.DiaChi}</Text>
         </Box>
         <Box>
@@ -103,7 +134,9 @@ function DeliveredScreen() {
               <Box style={styles.container}>
                 <Pressable onPress={() => onOpen()}>
                   <Box style={styles.addrBtnSection}>
-                    <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                    <Text style={styles.addrBtnText}>
+                      {streetNameFromRedux ?? streetName}
+                    </Text>
                     {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
                   </Box>
                 </Pressable>
@@ -114,7 +147,9 @@ function DeliveredScreen() {
           )}
         </>
       )}
-      <ListStreetNameDGBottomSheet modal={modalRef} />
+      {!listStreets ? null : (
+        <ListStreetNameDGBottomSheet data={listStreets} modal={modalRef} />
+      )}
     </>
   );
 }
