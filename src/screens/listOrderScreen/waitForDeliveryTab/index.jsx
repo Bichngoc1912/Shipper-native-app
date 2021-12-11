@@ -67,7 +67,6 @@ function WaitForDeliveryScreen() {
 
     getListWaitDeliveryTab({ tab: 'CG', group: groupId, code })
       .then((res) => {
-        console.log('res cho giao', res?.data);
         if (!isComponentMounted) {
           return;
         }
@@ -123,6 +122,7 @@ function WaitForDeliveryScreen() {
           >
             Chi tiết
           </Button>
+          <Text>{item.TrangThai}</Text>
         </Box>
       </Box>
     );

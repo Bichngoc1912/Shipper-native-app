@@ -9,7 +9,9 @@ import { getListReturnTab } from '@/services';
 import LoadingComponent from '@/components/Loading/index';
 import ListStreetNameTLBottomSheet from '@/components/ListStreetNameTL';
 import EmptyListOrder from '@/components/EmptyListOrder';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { userAccountActions } from '@/store/userReducer';
+import { getListStreetNameTL } from '@/services/getListAddress';
 
 function ReturnsGoodTab() {
   const styles = useMemo(() => {
@@ -19,7 +21,10 @@ function ReturnsGoodTab() {
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
   const [isEmptyListOrder, setIsEmptyListOrder] = useState(false);
+  const [listStreets, setListStreet] = useState();
+  const [streetName, setStreetName] = useState('');
 
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const modalRef = useRef(null);
@@ -28,12 +33,37 @@ function ReturnsGoodTab() {
   };
 
   const code = useSelector((state) => state.userAccount.code);
+  const groupId = useSelector((state) => state.userAccount.groupTL);
+  const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameTL);
+
+  useEffect(() => {
+    let isComponentMounted = true;
+    setIsGettingData(true);
+
+    getListStreetNameTL({ code: code })
+      .then((res) => {
+        if (!isComponentMounted) {
+          return;
+        }
+
+        dispatch(userAccountActions.setGroupTL(res?.data?.List[0].GroupID));
+        setStreetName(res?.data?.List[0].Name);
+        setListStreet(res?.data?.List);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     setIsGettingData(true);
     let isComponentMounted = true;
 
-    getListReturnTab({ tab: 'TL', group: 10, code: code })
+    getListReturnTab({ tab: 'TL', group: groupId, code: code })
       .then((res) => {
         if (!isComponentMounted) {
           return;
@@ -59,7 +89,7 @@ function ReturnsGoodTab() {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [groupId]);
 
   const renderListWaiting = listShop?.map((item, idx) => {
     return (
@@ -108,7 +138,9 @@ function ReturnsGoodTab() {
               <Box style={styles.container}>
                 <Pressable onPress={() => onOpen()}>
                   <Box style={styles.addrBtnSection}>
-                    <Text style={styles.addrBtnText}>Phan Đình Phùng</Text>
+                    <Text style={styles.addrBtnText}>
+                      {streetNameFromRedux ?? streetName}
+                    </Text>
                     {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
                   </Box>
                 </Pressable>
@@ -119,7 +151,9 @@ function ReturnsGoodTab() {
           )}
         </>
       )}
-      <ListStreetNameTLBottomSheet modal={modalRef} />
+      {!listStreets ? null : (
+        <ListStreetNameTLBottomSheet modal={modalRef} data={listStreets} />
+      )}
     </>
   );
 }

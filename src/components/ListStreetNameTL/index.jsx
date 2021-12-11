@@ -20,9 +20,18 @@ const ListStreetNameTLBottomSheet = (props) => {
     return CreateStyles();
   });
 
+  const handleClickStreetName = (groupId, streetName) => {
+    dispatch(userAccountActions.setGroupTL(groupId));
+    dispatch(userAccountActions.setStreetNameTL(streetName));
+    onClose();
+  };
+
   const renderListStreetName = data?.map((item) => {
     return (
-      <Pressable key={item.GroupID}>
+      <Pressable
+        key={item.GroupID}
+        onPress={() => handleClickStreetName(item.GroupID, item.Name)}
+      >
         <Box style={styles.streetNameItem}>
           <Text>{item.Name}</Text>
         </Box>

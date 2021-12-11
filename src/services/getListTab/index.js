@@ -21,7 +21,6 @@ export async function getListWaitDeliveryTab({ tab, group, code }) {
     code: code,
   };
 
-  console.log('reqParam cho giao', reqParam);
   try {
     return await httpClient.get('tab-list.html', reqParam);
   } catch (err) {
@@ -46,7 +45,6 @@ export async function getListWaitDelivered({ tab, group, code }) {
 export async function getListReturnTab({ tab, group, code }) {
   const reqParam = {
     tab: tab,
-    id: 1,
     group: group,
     code: code,
   };

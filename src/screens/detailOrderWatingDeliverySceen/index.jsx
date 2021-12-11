@@ -157,6 +157,14 @@ function DetailOrderWaitingDeliveryScreen() {
               </Pressable>
               <Pressable
                 style={styles.btnInner2}
+                onPress={() => handleChangeStatus(shopInfo?.DonHangID, 'DGCT')}
+              >
+                <Box style={styles.btnTextTitle}>
+                  <Text style={styles.btnTextTitleInner}>{'ĐGCT'}</Text>
+                </Box>
+              </Pressable>
+              <Pressable
+                style={styles.btnInner3}
                 onPress={() => handleChangeStatus(shopInfo?.DonHangID, 'CT')}
               >
                 <Box style={styles.btnTextTitle}>

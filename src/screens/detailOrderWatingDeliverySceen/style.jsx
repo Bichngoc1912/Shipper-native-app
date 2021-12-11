@@ -99,7 +99,7 @@ export function createStyles() {
       fontSize: 15,
     },
     btnInner1: {
-      width: '50%',
+      width: '33%',
       height: '100%',
       display: 'flex',
       justifyContent: 'center',
@@ -107,7 +107,15 @@ export function createStyles() {
       borderRightWidth: 1,
     },
     btnInner2: {
-      width: '50%',
+      width: '34%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      borderRightColor: 'white',
+      borderRightWidth: 1,
+    },
+    btnInner3: {
+      width: '33%',
       display: 'flex',
       justifyContent: 'center',
     },

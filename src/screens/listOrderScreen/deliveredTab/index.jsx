@@ -62,7 +62,6 @@ function DeliveredScreen() {
 
     getListWaitDelivered({ tab: 'DG', group: groupId, code: code })
       .then((res) => {
-        console.log('getListStreetNameDG', res?.data?.List[0]);
         if (!isComponentMounted) {
           return;
         }
