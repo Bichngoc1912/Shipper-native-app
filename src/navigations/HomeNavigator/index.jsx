@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
 import WaitForItTab from '@/screens/listOrderScreen/waitForItTab';
 import WaitForDeliveryTab from '@/screens/listOrderScreen/waitForDeliveryTab';
 import DeliveredTab from '@/screens/listOrderScreen/deliveredTab';

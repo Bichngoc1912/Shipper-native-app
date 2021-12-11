@@ -31,7 +31,7 @@ const DetailWaitingForItScreen = () => {
       .then((res) => {
         if (res?.data?.msg === 'Error') {
           toast.show({
-            description: 'Đã có lỗi xảy ra !',
+            title: 'Đã có lỗi xảy ra !',
             status: 'error',
             placement: 'top',
             isClosable: true,
@@ -39,14 +39,13 @@ const DetailWaitingForItScreen = () => {
           return;
         }
 
-        console.log('lakjdhfkadf', res?.data);
         toast.show({
           baseStyle: {
             display: 'flex',
             flexWrap: 'wrap',
             fontSize: 11,
           },
-          description: 'Cập nhật thành công !',
+          title: 'Cập nhật thành công !',
           status: 'success',
           placement: 'top',
           isClosable: true,

@@ -6,6 +6,7 @@ import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 import { changeStatus } from '@/services/changeStatus';
+import { useSelector } from 'react-redux';
 
 //chờ giao
 function DetailOrderWaitingDeliveryScreen() {
@@ -19,14 +20,14 @@ function DetailOrderWaitingDeliveryScreen() {
 
   const [isGettingData, setIsGettingData] = useState(false);
   const [shopInfo, setShopInfo] = useState();
-  const [orderID, setOrderID] = useState();
+  const codeFromRedux = useSelector((state) => state.userAccount.code);
 
   const handleChangeStatus = (id, status) => {
-    changeStatus({ id: id, status: status })
+    changeStatus({ id: id, status: status, code: codeFromRedux })
       .then((res) => {
         if (res?.data?.msg === 'Error') {
           toast.show({
-            description: 'Đã có lỗi xảy ra !',
+            title: 'Đã có lỗi xảy ra !',
             status: 'error',
             placement: 'top',
             isClosable: true,
@@ -40,11 +41,15 @@ function DetailOrderWaitingDeliveryScreen() {
             flexWrap: 'wrap',
             fontSize: 11,
           },
-          description: 'Cập nhật thành công !',
+          title: 'Cập nhật thành công !',
           status: 'success',
           placement: 'top',
           isClosable: true,
         });
+
+        setTimeout(() => {
+          navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
@@ -160,7 +165,7 @@ function DetailOrderWaitingDeliveryScreen() {
                 onPress={() => handleChangeStatus(shopInfo?.DonHangID, 'DGCT')}
               >
                 <Box style={styles.btnTextTitle}>
-                  <Text style={styles.btnTextTitleInner}>{'ĐGCT'}</Text>
+                  <Text style={styles.btnTextTitleInner}>{'Đã giao 1 phần'}</Text>
                 </Box>
               </Pressable>
               <Pressable

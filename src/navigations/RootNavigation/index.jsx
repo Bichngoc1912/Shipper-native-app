@@ -10,17 +10,46 @@ import DetailOrderWaitingDeliveryScreen from '@/screens/detailOrderWatingDeliver
 import DetailOrderDeliverdScreen from '@/screens/detailOrderDeliveredScreen';
 import { Host } from 'react-native-portalize';
 import LoginScreen from '@/screens/userScreen/loginScreen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Pressable } from 'native-base';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { colorPalletter } from '@/assets/theme/color';
+import { userAccountActions } from '@/store/userReducer';
 
 const RootStack = createStackNavigator();
 
 const RootNavigation = () => {
   const codeLogin = useSelector((state) => state.userAccount.code);
 
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(userAccountActions.setCode(undefined));
+  };
+
   return (
     <NavigationContainer>
       <Host>
         <RootStack.Navigator
+          screenOptions={() => ({
+            headerRight: () => {
+              return (
+                <Pressable
+                  style={{
+                    paddingHorizontal: 12,
+                  }}
+                  onPress={() => handleLogout()}
+                >
+                  <FontAwesomeIcon
+                    icon={faSignOutAlt}
+                    color={colorPalletter.lime[600]}
+                    size={24}
+                  />
+                </Pressable>
+              );
+            },
+          })}
           initialRouteName={codeLogin ? SCREENS_NAME.LIST_ORDER : SCREENS_NAME.LOGIN}
         >
           <RootStack.Screen

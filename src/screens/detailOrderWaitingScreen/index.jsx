@@ -1,11 +1,13 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Box, Text, Checkbox, Pressable } from 'native-base';
+import { Box, Text, Checkbox, Pressable, useToast } from 'native-base';
 import { createStyles } from './style';
 import { ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import LoadingComponent from '@/components/Loading/index';
 import { getDetailOrder } from '@/services';
 import { SCREENS_NAME } from '@/constants/screen';
+import { changeStatus } from '@/services/changeStatus';
+import { useSelector } from 'react-redux';
 
 //Trả lại
 function DetailOrderWaitingScreen() {
@@ -13,8 +15,12 @@ function DetailOrderWaitingScreen() {
     return createStyles();
   }, []);
 
+  const toast = useToast();
   const route = useRoute();
+  const navigation = useNavigation();
+
   const { tab, id } = route?.params;
+  const codeFromRedux = useSelector((state) => state.userAccount.code);
 
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
@@ -45,6 +51,40 @@ function DetailOrderWaitingScreen() {
       isComponentMounted = false;
     };
   }, [id, tab]);
+
+  const handleChangeStatus = (id, status) => {
+    changeStatus({ id: id, status: status, code: codeFromRedux })
+      .then((res) => {
+        if (res?.data?.msg === 'Error') {
+          toast.show({
+            title: 'Đã có lỗi xảy ra !',
+            status: 'error',
+            placement: 'top',
+            isClosable: true,
+          });
+          return;
+        }
+
+        toast.show({
+          baseStyle: {
+            display: 'flex',
+            flexWrap: 'wrap',
+            fontSize: 11,
+          },
+          title: 'Cập nhật thành công !',
+          status: 'success',
+          placement: 'top',
+          isClosable: true,
+        });
+
+        setTimeout(() => {
+          navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const renderListOrder = listShop?.map((item, idx) => {
     return (
@@ -106,7 +146,10 @@ function DetailOrderWaitingScreen() {
                   <Text style={styles.btnTextTitleInner}>{''}</Text>
                 </Box>
               </Pressable>
-              <Pressable style={styles.btnInner2}>
+              <Pressable
+                style={styles.btnInner2}
+                onPress={() => handleChangeStatus(shopInfo?.DonHangID, 'CG')}
+              >
                 <Box style={styles.btnTextTitle}>
                   <Text style={styles.btnTextTitleInner}>{'Chờ giao'}</Text>
                 </Box>
