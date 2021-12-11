@@ -36,6 +36,7 @@ function WaitForDeliveryScreen() {
 
   const code = useSelector((state) => state.userAccount.code);
   const groupId = useSelector((state) => state.userAccount.groupCG);
+  const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameCG);
 
   useEffect(() => {
     let isComponentMounted = true;
@@ -139,7 +140,9 @@ function WaitForDeliveryScreen() {
             <Box style={styles.container}>
               <Pressable onPress={() => onOpen()}>
                 <Box style={styles.addrBtnSection}>
-                  <Text style={styles.addrBtnText}>{streetName}</Text>
+                  <Text style={styles.addrBtnText}>
+                    {streetNameFromRedux ?? streetName}
+                  </Text>
                   {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
                 </Box>
               </Pressable>

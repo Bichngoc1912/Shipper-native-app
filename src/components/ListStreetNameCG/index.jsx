@@ -20,14 +20,18 @@ const ListStreetNameCGBottomSheet = (props) => {
     return CreateStyles();
   });
 
-  const handleClickStreet = (street) => {
-    dispatch(userAccountActions.setGroupCG(street));
+  const handleClickStreet = (groupId, streetName) => {
+    dispatch(userAccountActions.setGroupCG(groupId));
+    dispatch(userAccountActions.setStreetNameCG(streetName));
     onClose();
   };
 
   const renderListStreetName = data?.map((item) => {
     return (
-      <Pressable key={item.GroupID} onPress={() => handleClickStreet(item.GroupID)}>
+      <Pressable
+        key={item.GroupID}
+        onPress={() => handleClickStreet(item.GroupID, item.Name)}
+      >
         <Box style={styles.streetNameItem}>
           <Text>{item.Name}</Text>
         </Box>
