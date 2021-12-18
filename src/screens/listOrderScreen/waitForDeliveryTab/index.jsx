@@ -63,7 +63,7 @@ function WaitForDeliveryScreen() {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [isReGettingDataCGFromRedux]);
 
   useEffect(() => {
     setIsGettingData(true);
@@ -86,7 +86,6 @@ function WaitForDeliveryScreen() {
           return;
         }
 
-        console.log('isReGettingDataCGFromRedux', isReGettingDataCGFromRedux);
         if (isReGettingDataCGFromRedux) {
           dispatch(listOrderActions.setIsReloadGettingDataCG(false));
         }

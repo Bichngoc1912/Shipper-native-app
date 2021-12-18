@@ -8,6 +8,7 @@ import { changeStatus } from '@/services/changeStatus';
 import { SCREENS_NAME } from '@/constants/screen';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrderActions } from '@/store/listOrderReducer';
+import { CommonActions } from '@react-navigation/native';
 
 //Chờ lấy
 const DetailWaitingForItScreen = () => {
@@ -54,7 +55,11 @@ const DetailWaitingForItScreen = () => {
         });
 
         setTimeout(() => {
-          navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
+          navigation.dispatch(
+            CommonActions.navigate({
+              name: SCREENS_NAME.HOME_NAVIGATOR,
+            }),
+          );
           dispatch(listOrderActions.setIsReloadGettingDataCG(true));
         }, 2000);
       })

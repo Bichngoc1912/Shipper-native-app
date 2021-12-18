@@ -13,6 +13,7 @@ import { userAccountActions } from '@/store/userReducer';
 import { getListStreetNameDG } from '@/services/getListAddress';
 import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { listOrderActions } from '@/store/listOrderReducer';
 
 function DeliveredScreen() {
   const styles = useMemo(() => {
@@ -36,6 +37,7 @@ function DeliveredScreen() {
   const code = useSelector((state) => state.userAccount.code);
   const groupId = useSelector((state) => state.userAccount.groupDG);
   const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameDG);
+  const isReGettingData = useSelector((state) => state.listOrder.isReloadGettingDataDG);
 
   useEffect(() => {
     setIsGettingData(true);
@@ -54,7 +56,7 @@ function DeliveredScreen() {
       setStreetName(res?.data?.List[0].Name);
       setListStreet(res?.data?.List);
     });
-  }, []);
+  }, [isReGettingData]);
 
   useEffect(() => {
     setIsGettingData(true);
@@ -62,11 +64,21 @@ function DeliveredScreen() {
 
     getListWaitDelivered({ tab: 'DG', group: groupId, code: code })
       .then((res) => {
+        if (isReGettingData) {
+          dispatch(listOrderActions.setIsReloadGettingDataDG(false));
+        }
+
         if (!isComponentMounted) {
           return;
         }
 
         if (!res?.data?.List) {
+          setIsEmptyListOrder(true);
+          setIsGettingData(false);
+          return;
+        }
+
+        if (isEmpty(res?.data?.List)) {
           setIsEmptyListOrder(true);
           setIsGettingData(false);
           return;
@@ -86,7 +98,7 @@ function DeliveredScreen() {
     return () => {
       isComponentMounted = false;
     };
-  }, [groupId]);
+  }, [groupId, isReGettingData]);
 
   const renderListWaiting = listShop?.map((item) => {
     return (

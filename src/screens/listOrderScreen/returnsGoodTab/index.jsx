@@ -12,6 +12,8 @@ import EmptyListOrder from '@/components/EmptyListOrder';
 import { useSelector, useDispatch } from 'react-redux';
 import { userAccountActions } from '@/store/userReducer';
 import { getListStreetNameTL } from '@/services/getListAddress';
+import { listOrderActions } from '@/store/listOrderReducer';
+import { isEmpty } from 'lodash';
 
 function ReturnsGoodTab() {
   const styles = useMemo(() => {
@@ -35,6 +37,7 @@ function ReturnsGoodTab() {
   const code = useSelector((state) => state.userAccount.code);
   const groupId = useSelector((state) => state.userAccount.groupTL);
   const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameTL);
+  const isReGettingData = useSelector((state) => state.listOrder.isReloadGettingDataTL);
 
   useEffect(() => {
     let isComponentMounted = true;
@@ -57,7 +60,7 @@ function ReturnsGoodTab() {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [isReGettingData]);
 
   useEffect(() => {
     setIsGettingData(true);
@@ -65,11 +68,21 @@ function ReturnsGoodTab() {
 
     getListReturnTab({ tab: 'TL', group: groupId, code: code })
       .then((res) => {
+        if (isReGettingData) {
+          dispatch(listOrderActions.setIsReloadGettingDataTL(false));
+        }
+
         if (!isComponentMounted) {
           return;
         }
 
         if (!res?.data?.List) {
+          setIsEmptyListOrder(true);
+          setIsGettingData(false);
+          return;
+        }
+
+        if (isEmpty(res?.data?.List)) {
           setIsEmptyListOrder(true);
           setIsGettingData(false);
           return;
@@ -89,7 +102,7 @@ function ReturnsGoodTab() {
     return () => {
       isComponentMounted = false;
     };
-  }, [groupId]);
+  }, [groupId, isReGettingData]);
 
   const renderListWaiting = listShop?.map((item, idx) => {
     return (
@@ -131,24 +144,20 @@ function ReturnsGoodTab() {
         <LoadingComponent />
       ) : (
         <>
-          {isEmptyListOrder ? (
-            <EmptyListOrder />
-          ) : (
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <Box style={styles.container}>
-                <Pressable onPress={() => onOpen()}>
-                  <Box style={styles.addrBtnSection}>
-                    <Text style={styles.addrBtnText}>
-                      {streetNameFromRedux ?? streetName}
-                    </Text>
-                    {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
-                  </Box>
-                </Pressable>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Box style={styles.container}>
+              <Pressable onPress={() => onOpen()}>
+                <Box style={styles.addrBtnSection}>
+                  <Text style={styles.addrBtnText}>
+                    {streetNameFromRedux ?? streetName}
+                  </Text>
+                  {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
+                </Box>
+              </Pressable>
 
-                {renderListWaiting}
-              </Box>
-            </ScrollView>
-          )}
+              {isEmptyListOrder ? <EmptyListOrder /> : renderListWaiting}
+            </Box>
+          </ScrollView>
         </>
       )}
       {!listStreets ? null : (

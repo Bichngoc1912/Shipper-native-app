@@ -5,7 +5,7 @@ import { Portal } from 'react-native-portalize';
 import { CreateStyles } from './style';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userAccountActions } from '@/store/userReducer';
 
 const ListStreetNameCGBottomSheet = (props) => {

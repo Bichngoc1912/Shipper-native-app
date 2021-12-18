@@ -3,10 +3,11 @@ import { Box, Text, Pressable, useToast } from 'native-base';
 import { createStyles } from './style';
 import { ScrollView } from 'react-native';
 import { getDetailOrder } from '@/services';
-import { useRoute } from '@react-navigation/core';
+import { useRoute, useNavigation } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 import { changeStatus } from '@/services/changeStatus';
 import { useSelector, useDispatch } from 'react-redux';
+import { SCREENS_NAME } from '@/constants/screen';
 import { listOrderActions } from '@/store/listOrderReducer';
 
 //chờ giao
@@ -18,6 +19,7 @@ function DetailOrderWaitingDeliveryScreen() {
   const toast = useToast();
   const route = useRoute();
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const { id, tab } = route?.params;
 
@@ -51,16 +53,9 @@ function DetailOrderWaitingDeliveryScreen() {
         });
 
         setTimeout(() => {
-          navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
-          if (status === 'DG') {
-            dispatch(listOrderActions.setIsReloadGettingDataDG(true));
-          }
-
-          if (status === 'DGCT') {
-          }
-
-          if (status === 'CT') {
-          }
+          navigation.replace(SCREENS_NAME.HOME_NAVIGATOR);
+          dispatch(listOrderActions.setIsReloadGettingDataDG(true));
+          dispatch(listOrderActions.setIsReloadGettingDataTL(true));
         }, 2000);
       })
       .catch((err) => {
@@ -104,7 +99,7 @@ function DetailOrderWaitingDeliveryScreen() {
           <ScrollView>
             <Box style={styles.guestInfoSection}>
               <Text style={styles.guestInfoPhoneNumber}>
-                {shopInfo?.MaDonHang} {'-'} {shopInfo?.DienThoaiKH}
+                {shopInfo?.Ma} {'-'} {shopInfo?.DienThoaiKH}
               </Text>
               <Text style={styles.guestInfoName}>
                 {'Người mua:'} <Text>{shopInfo?.TenKH}</Text>

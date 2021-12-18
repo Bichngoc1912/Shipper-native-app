@@ -7,7 +7,8 @@ import LoadingComponent from '@/components/Loading/index';
 import { getDetailOrder } from '@/services';
 import { SCREENS_NAME } from '@/constants/screen';
 import { changeStatus } from '@/services/changeStatus';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { listOrderActions } from '@/store/listOrderReducer';
 
 //Trả lại
 function DetailOrderWaitingScreen() {
@@ -18,6 +19,7 @@ function DetailOrderWaitingScreen() {
   const toast = useToast();
   const route = useRoute();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const { tab, id } = route?.params;
   const codeFromRedux = useSelector((state) => state.userAccount.code);
@@ -25,6 +27,7 @@ function DetailOrderWaitingScreen() {
   const [isGettingData, setIsGettingData] = useState(false);
   const [listShop, setListShop] = useState();
   const [shopInfo, setShopInfo] = useState();
+  const [orderID, setOrderID] = useState();
 
   useEffect(() => {
     setIsGettingData(true);
@@ -55,7 +58,7 @@ function DetailOrderWaitingScreen() {
   const handleChangeStatus = (id, status) => {
     changeStatus({ id: id, status: status, code: codeFromRedux })
       .then((res) => {
-        if (res?.data?.msg === 'Error') {
+        if (res?.data?.result === 'Error') {
           toast.show({
             title: 'Đã có lỗi xảy ra !',
             status: 'error',
@@ -78,7 +81,8 @@ function DetailOrderWaitingScreen() {
         });
 
         setTimeout(() => {
-          navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
+          navigation.replace(SCREENS_NAME.HOME_NAVIGATOR);
+          dispatch(listOrderActions.setIsReloadGettingDataCG(true));
         }, 2000);
       })
       .catch((err) => {
@@ -94,9 +98,17 @@ function DetailOrderWaitingScreen() {
             accessibilityLabel="This is a dummy checkbox"
             colorScheme="green"
             size="sm"
+            onPress={() => {
+              if (orderID) {
+                setOrderID(orderID + '-' + item.DonHangID);
+                return;
+              }
+
+              setOrderID(item.DonHangID);
+            }}
           />
           <Text style={styles.orderItemTitle}>
-            <Text style={styles.orderTitleBold}>{item.MaDonHang} </Text>
+            <Text style={styles.orderTitleBold}>{item.Ma} </Text>
             {'-'} {item.TenKH}
           </Text>
         </Box>
@@ -148,7 +160,7 @@ function DetailOrderWaitingScreen() {
               </Pressable>
               <Pressable
                 style={styles.btnInner2}
-                onPress={() => handleChangeStatus(shopInfo?.DonHangID, 'CG')}
+                onPress={() => handleChangeStatus(orderID, 'CG')}
               >
                 <Box style={styles.btnTextTitle}>
                   <Text style={styles.btnTextTitleInner}>{'Chờ giao'}</Text>

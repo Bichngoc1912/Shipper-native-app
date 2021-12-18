@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SCREENS_NAME } from '@/constants/screen';
@@ -32,24 +32,24 @@ const RootNavigation = () => {
     <NavigationContainer>
       <Host>
         <RootStack.Navigator
-          screenOptions={() => ({
-            headerRight: () => {
-              return (
-                <Pressable
-                  style={{
-                    paddingHorizontal: 12,
-                  }}
-                  onPress={() => handleLogout()}
-                >
-                  <FontAwesomeIcon
-                    icon={faSignOutAlt}
-                    color={colorPalletter.lime[600]}
-                    size={24}
-                  />
-                </Pressable>
-              );
-            },
-          })}
+          // screenOptions={() => ({
+          //   headerRight: () => {
+          //     return (
+          //       <Pressable
+          //         style={{
+          //           paddingHorizontal: 12,
+          //         }}
+          //         onPress={() => handleLogout()}
+          //       >
+          //         <FontAwesomeIcon
+          //           icon={faSignOutAlt}
+          //           color={colorPalletter.lime[600]}
+          //           size={24}
+          //         />
+          //       </Pressable>
+          //     );
+          //   },
+          // })}
           initialRouteName={codeLogin ? SCREENS_NAME.LIST_ORDER : SCREENS_NAME.LOGIN}
         >
           <RootStack.Screen
