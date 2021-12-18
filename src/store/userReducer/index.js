@@ -48,6 +48,9 @@ const userAccountSlices = createSlice({
     setStreetNameTL(state, action) {
       state.streetNameTL = action.payload;
     },
+    setStreetNameCL(state, action) {
+      state.streetNameCL = action.payload;
+    },
   },
 });
 

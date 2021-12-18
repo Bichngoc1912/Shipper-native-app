@@ -6,7 +6,8 @@ import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 import { changeStatus } from '@/services/changeStatus';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { listOrderActions } from '@/store/listOrderReducer';
 
 //chờ giao
 function DetailOrderWaitingDeliveryScreen() {
@@ -16,6 +17,8 @@ function DetailOrderWaitingDeliveryScreen() {
 
   const toast = useToast();
   const route = useRoute();
+  const dispatch = useDispatch();
+
   const { id, tab } = route?.params;
 
   const [isGettingData, setIsGettingData] = useState(false);
@@ -49,6 +52,15 @@ function DetailOrderWaitingDeliveryScreen() {
 
         setTimeout(() => {
           navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
+          if (status === 'DG') {
+            dispatch(listOrderActions.setIsReloadGettingDataDG(true));
+          }
+
+          if (status === 'DGCT') {
+          }
+
+          if (status === 'CT') {
+          }
         }, 2000);
       })
       .catch((err) => {

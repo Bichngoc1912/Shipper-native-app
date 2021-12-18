@@ -28,10 +28,6 @@ const RootNavigation = () => {
     dispatch(userAccountActions.setCode(undefined));
   };
 
-  useEffect(() => {
-    console.log('chayj lao ne ', codeLogin);
-  }, [codeLogin]);
-
   return (
     <NavigationContainer>
       <Host>

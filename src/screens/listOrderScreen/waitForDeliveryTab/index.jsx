@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getListStreetNameCG } from '@/services/getListAddress';
 import { isEmpty } from 'lodash';
 import { userAccountActions } from '@/store/userReducer';
+import { listOrderActions } from '@/store/listOrderReducer';
 
 //Cho giao
 function WaitForDeliveryScreen() {
@@ -37,6 +38,9 @@ function WaitForDeliveryScreen() {
   const code = useSelector((state) => state.userAccount.code);
   const groupId = useSelector((state) => state.userAccount.groupCG);
   const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameCG);
+  const isReGettingDataCGFromRedux = useSelector(
+    (state) => state.listOrder.isReloadGettingDataCG,
+  );
 
   useEffect(() => {
     let isComponentMounted = true;
@@ -82,6 +86,11 @@ function WaitForDeliveryScreen() {
           return;
         }
 
+        console.log('isReGettingDataCGFromRedux', isReGettingDataCGFromRedux);
+        if (isReGettingDataCGFromRedux) {
+          dispatch(listOrderActions.setIsReloadGettingDataCG(false));
+        }
+
         setIsEmptyListOrder(false);
         setListShop(res?.data?.List);
         setIsGettingData(false);
@@ -96,14 +105,16 @@ function WaitForDeliveryScreen() {
     return () => {
       isComponentMounted = false;
     };
-  }, [groupId]);
+  }, [groupId, isReGettingDataCGFromRedux]);
 
   const renderListWaiting = listShop?.map((item) => {
     return (
       <Box style={styles.listOrderItem} key={item.DonHangID}>
         <Box>
           <Pressable onPress={() => Linking.openURL(`tel:${item.DienThoai}`)}>
-            <Text style={styles.listOrderItemTextPhone}>{item.DienThoai}</Text>
+            <Text style={styles.listOrderItemTextPhone}>
+              {item.DonHangID} {'-'} {item.DienThoai}
+            </Text>
           </Pressable>
           <Text>{item.HoTen}</Text>
           <Text>{item.DiaChi}</Text>

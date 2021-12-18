@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getListStreetNameCL } from '@/services/getListAddress';
 import { userAccountActions } from '@/store/userReducer';
 import { isEmpty } from 'lodash';
+import { listOrderActions } from '@/store/listOrderReducer';
 
 function WaitForItTab() {
   const styles = useMemo(() => {
@@ -30,6 +31,9 @@ function WaitForItTab() {
   const code = useSelector((state) => state.userAccount.code);
   const groupId = useSelector((state) => state.userAccount.groupCL);
   const streetNameFromRedux = useSelector((state) => state.userAccount.streetNameCL);
+  const isReGettingDataCLFromRedux = useSelector(
+    (state) => state.listOrder.isReloadGettingDataCL,
+  );
 
   const modalRef = useRef(null);
   const onOpen = () => {
@@ -84,6 +88,10 @@ function WaitForItTab() {
           return;
         }
 
+        if (isReGettingDataCLFromRedux) {
+          dispatch(listOrderActions.setIsReloadGettingDataCL(false));
+        }
+
         setIsEmptyListOrder(false);
         setIsGettingData(false);
         setListShop(res.data?.List);
@@ -98,7 +106,7 @@ function WaitForItTab() {
     return () => {
       isComponentMounted = false;
     };
-  }, [groupId]);
+  }, [groupId, isReGettingDataCLFromRedux]);
 
   const renderListWaiting = listShop?.map((item, idx) => {
     return (
@@ -143,7 +151,7 @@ function WaitForItTab() {
         <LoadingComponent />
       ) : (
         <>
-          {isEmptyListOrder ? (
+          {isEmptyListOrder || !listShop ? (
             <EmptyListOrder />
           ) : (
             <ScrollView showsVerticalScrollIndicator={false}>

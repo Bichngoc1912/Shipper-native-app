@@ -6,7 +6,8 @@ import { useRoute, useNavigation } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
 import { changeStatus } from '@/services/changeStatus';
 import { SCREENS_NAME } from '@/constants/screen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { listOrderActions } from '@/store/listOrderReducer';
 
 //Chờ lấy
 const DetailWaitingForItScreen = () => {
@@ -16,6 +17,7 @@ const DetailWaitingForItScreen = () => {
   });
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const toast = useToast();
   const route = useRoute();
   const { id, tab } = route?.params;
@@ -53,6 +55,7 @@ const DetailWaitingForItScreen = () => {
 
         setTimeout(() => {
           navigation.navigate({ name: SCREENS_NAME.HOME_NAVIGATOR });
+          dispatch(listOrderActions.setIsReloadGettingDataCG(true));
         }, 2000);
       })
       .catch((err) => {
@@ -104,7 +107,7 @@ const DetailWaitingForItScreen = () => {
             }}
           />
           <Text style={styles.orderItemTitle}>
-            <Text style={styles.orderTitleBold}>{item.MaDonHang} </Text>
+            <Text style={styles.orderTitleBold}>{item.Ma} </Text>
             {'-'} {item.TenKH}
           </Text>
         </Box>

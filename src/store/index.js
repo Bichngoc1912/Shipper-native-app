@@ -1,5 +1,8 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userReducer, { REDUCER_NAME as USER_REDUCER_NAME } from './userReducer';
+import listOrderReducer, {
+  REDUCER_NAME as LISTORDER_REDUCE_NAME,
+} from './listOrderReducer/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   FLUSH,
@@ -14,6 +17,7 @@ import {
 
 const rootReducers = combineReducers({
   [USER_REDUCER_NAME]: userReducer,
+  [LISTORDER_REDUCE_NAME]: listOrderReducer,
 });
 
 const persistConfig = {

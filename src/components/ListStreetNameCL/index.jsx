@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useContext } from 'react';
 import { Box, Text, Pressable } from 'native-base';
 import { Modalize } from 'react-native-modalize';
 import { Portal } from 'react-native-portalize';

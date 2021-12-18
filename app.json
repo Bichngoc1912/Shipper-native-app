@@ -7,6 +7,11 @@
     "splash": {
       "image": "./src/assets/images/dev_ship.png",
       "resizeMode": "cover"
+    },
+    "android": {
+      "versionCode": 1,
+      "package": "com.shipping.dev",
+      "googleServicesFile": "./src/assets/firebase/google-services.json"
     }
   }
 }
