@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Box, Text, Button, Pressable } from 'native-base';
+import { Box, Text, Pressable } from 'native-base';
 import { createStyles } from './style';
-import { ScrollView } from 'react-native';
+import { ScrollView, Linking } from 'react-native';
 import { getDetailOrder } from '@/services';
 import { useRoute } from '@react-navigation/core';
 import LoadingComponent from '@/components/Loading/index';
@@ -95,7 +95,13 @@ function DetailOrderDeliverdScreen() {
                 {'Người bán: '}
                 <Text>{shopInfo?.TenShop}</Text>
               </Text>
-              <Text style={styles.sellerPhoneNumberInner}>{shopInfo?.DienThoaiShop}</Text>
+              <Pressable
+                onPress={() => Linking.openURL(`tel:${shopInfo?.DienThoaiShop}`)}
+              >
+                <Text style={styles.sellerPhoneNumberInner}>
+                  {shopInfo?.DienThoaiShop}
+                </Text>
+              </Pressable>
             </Box>
           </ScrollView>
         </Box>

@@ -68,12 +68,12 @@ function ReturnsGoodTab() {
 
     getListReturnTab({ tab: 'TL', group: groupId, code: code })
       .then((res) => {
-        if (isReGettingData) {
-          dispatch(listOrderActions.setIsReloadGettingDataTL(false));
-        }
-
         if (!isComponentMounted) {
           return;
+        }
+
+        if (isReGettingData) {
+          dispatch(listOrderActions.setIsReloadGettingDataTL(false));
         }
 
         if (!res?.data?.List) {
@@ -144,24 +144,28 @@ function ReturnsGoodTab() {
         <LoadingComponent />
       ) : (
         <>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Box style={styles.container}>
-              <Pressable onPress={() => onOpen()}>
-                <Box style={styles.addrBtnSection}>
-                  <Text style={styles.addrBtnText}>
-                    {streetNameFromRedux ?? streetName}
-                  </Text>
-                  {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
-                </Box>
-              </Pressable>
+          {isEmptyListOrder ? (
+            <EmptyListOrder />
+          ) : (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Box style={styles.container}>
+                <Pressable onPress={() => onOpen()}>
+                  <Box style={styles.addrBtnSection}>
+                    <Text style={styles.addrBtnText}>
+                      {streetNameFromRedux ?? streetName}
+                    </Text>
+                    {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
+                  </Box>
+                </Pressable>
 
-              {isEmptyListOrder ? <EmptyListOrder /> : renderListWaiting}
-            </Box>
-          </ScrollView>
+                {renderListWaiting}
+              </Box>
+              {!listStreets ? null : (
+                <ListStreetNameTLBottomSheet modal={modalRef} data={listStreets} />
+              )}
+            </ScrollView>
+          )}
         </>
-      )}
-      {!listStreets ? null : (
-        <ListStreetNameTLBottomSheet modal={modalRef} data={listStreets} />
       )}
     </>
   );

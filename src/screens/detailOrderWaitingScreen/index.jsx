@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Box, Text, Checkbox, Pressable, useToast } from 'native-base';
 import { createStyles } from './style';
-import { ScrollView } from 'react-native';
+import { ScrollView, Linking } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import LoadingComponent from '@/components/Loading/index';
 import { getDetailOrder } from '@/services';
@@ -125,7 +125,10 @@ function DetailOrderWaitingScreen() {
         <Box style={styles.container}>
           <ScrollView>
             <Box style={styles.sellerInfoSection}>
-              <Text style={styles.sellerInfoPhoneTxt}>{shopInfo?.DienThoai}</Text>
+              <Pressable onPress={() => Linking.openURL(`tel:${shopInfo?.DienThoai}`)} >
+                <Text style={styles.sellerInfoPhoneTxt}>{shopInfo?.DienThoai}</Text>
+              </Pressable>
+             
               <Text style={styles.sellerInfoTitle}>
                 {'Người bán:'}
                 <Text style={styles.sellerInfoName}>{shopInfo?.TenShop}</Text>

@@ -58,7 +58,7 @@ function WaitForDeliveryScreen() {
         setStreetName(res?.data?.List[0].Name);
         setListStreet(res?.data?.List);
       })
-      .catch((err) => console.log('street CG', err));
+      .catch((err) => console.log(err));
 
     return () => {
       isComponentMounted = false;
@@ -77,6 +77,7 @@ function WaitForDeliveryScreen() {
 
         if (!res?.data?.List) {
           setIsGettingData(false);
+          setIsEmptyListOrder(true);
           return;
         }
 
@@ -147,23 +148,31 @@ function WaitForDeliveryScreen() {
           {isEmptyListOrder ? (
             <EmptyListOrder />
           ) : (
-            <Box style={styles.container}>
-              <Pressable onPress={() => onOpen()}>
-                <Box style={styles.addrBtnSection}>
-                  <Text style={styles.addrBtnText}>
-                    {streetNameFromRedux ?? streetName}
-                  </Text>
-                  {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
-                </Box>
-              </Pressable>
+            <>
+              <Box style={styles.container}>
+                <Pressable onPress={() => onOpen()}>
+                  <Box style={styles.addrBtnSection}>
+                    <Text style={styles.addrBtnText}>
+                      {streetNameFromRedux ?? streetName}
+                    </Text>
+                    {/* <FontAwesomeIcon icon={faAngleRight} size={14} /> */}
+                  </Box>
+                </Pressable>
 
-              <ScrollView showsVerticalScrollIndicator>{renderListWaiting}</ScrollView>
-            </Box>
+                <ScrollView showsVerticalScrollIndicator>{renderListWaiting}</ScrollView>
+              </Box>
+              <>
+                {!listStreets ? null : (
+                  <ListStreetNameCGBottomSheet
+                    modal={modalRef}
+                    tab={'CG'}
+                    data={listStreets}
+                  />
+                )}
+              </>
+            </>
           )}
         </>
-      )}
-      {!listStreets ? null : (
-        <ListStreetNameCGBottomSheet modal={modalRef} tab={'CG'} data={listStreets} />
       )}
     </>
   );

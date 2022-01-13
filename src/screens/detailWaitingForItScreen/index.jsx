@@ -9,6 +9,7 @@ import { SCREENS_NAME } from '@/constants/screen';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrderActions } from '@/store/listOrderReducer';
 import { CommonActions } from '@react-navigation/native';
+import { Linking } from 'react-native';
 
 //Chờ lấy
 const DetailWaitingForItScreen = () => {
@@ -129,7 +130,9 @@ const DetailWaitingForItScreen = () => {
         <Box style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Box style={styles.sellerInfoSection}>
-              <Text style={styles.sellerInfoPhoneTxt}>{shopInfo?.DienThoai}</Text>
+              <Pressable onPress={() => Linking.openURL(`tel:${shopInfo?.DienThoai}`)}>
+                <Text style={styles.sellerInfoPhoneTxt}>{shopInfo?.DienThoai}</Text>
+              </Pressable>
               <Text style={styles.sellerInfoTitle}>
                 {'Người bán:'}
                 <Text style={styles.sellerInfoName}>{shopInfo?.TenShop}</Text>
